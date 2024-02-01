@@ -26,73 +26,90 @@
                     <h3 class="font-weight-bold card-title">Tất cả</h3>
                 </div>
             </div>
-            <div>
-                @if(session('updated'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">
-                        {{session('updated')}}
-                    </div>
-                @endif
-                @if(session('confirm'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">
-                        {{session('del')}}
-                    </div>
-                @endif
-                @if(session('cancel'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-danger">
-                        {{session('updated')}}
-                    </div>
-                @endif
-            </div>
+{{--            <div>--}}
+{{--                @if(session('updated'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">--}}
+{{--                        {{session('updated')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--                @if(session('confirm'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">--}}
+{{--                        {{session('del')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--                @if(session('cancel'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-danger">--}}
+{{--                        {{session('updated')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--            </div>--}}
             <div class="card-body p-0">
                 <table class="table table-striped projects">
                     <thead>
                     <tr>
                         <th>ID</th>
                         <th>Mã KH</th>
-                        <th>Nội dung</th>
+{{--                        <th>Nội dung</th>--}}
                         <th>Giá trị</th>
+                        <th>Nội dung chuyển khoản</th>
+                        <th>Mã giao diịch</th>
                         <th>
                             <select class="bg-dark form-control-sm font-weight-bold border-0" name="" id="sortStatus"
                                     onchange="sortStatus_naptien()">
                                 <option value="" selected>Trạng thái</option>
                                 <option class="" value="Chờ xác nhận">Chờ xác nhận</option>
                                 <option class="" value="Thành công">Thành công</option>
-                                <option class="" value="Đã hủy">Đã hủy</option>
                             </select>
                         </th>
-                        <th>Xử lý</th>
+{{--                        <th>Xử lý</th>--}}
                         <th>Thời gian</th>
                         </th>
                     </tr>
                     </thead>
                     <tbody id="tbOrder">
                     @foreach($list_order as $key => $value)
-                        <tr>
-                            <td>{{ $value -> id }}</td>
-                            <td>{{ $value -> idnd }}</td>
-                            <td>{{ $value -> ndck }}</td>
-                            <td>{{ $value -> giatri }}</td>
-                            <td>
-                                @if($value -> trangthai== 0)
-                                    <small class="text-danger spkey" value="0">Chờ xác nhận</small>
-                                @elseif($value -> trangthai== 1)
-                                    <small class="text-warning spkey" value="1">Thành công</small>
-                                @elseif($value -> trangthai== 2)
-                                    <small class="text-primary spkey" value="2">Đã hủy</small>
-                                @endif
-                            </td>
-                            <td>
-                                <a href="{{ route('admin.naptien.activate', $value -> id) }}">
-                                    <span class="badge badge-info">Xác nhận</span>
-                                </a>
-                                <a href="{{ route('admin.naptien.cancel', $value -> id) }}">
-                                    <span class="badge badge-danger">Hủy</span>
-                                </a>
-                            </td>
-                            <td>
-                                {{date_format(new DateTime($value->ngay), 'H:i:s d/m/Y ')}}
-                            </td>
-                        </tr>
+                        @if($value->transID!=null)
+                            <tr>
+                                <td>{{ $value -> id }}</td>
+                                <td>{{ $value -> maNguoiDung }}</td>
+                                {{--                            <td>{{ $value -> ndck }}</td>--}}
+                                <td>{{$value->soTien}}</td>
+                                <td>
+                                    {{$value->ndck}}
+                                </td>
+                                <td>
+                                    {{$value->transID}}
+                                </td>
+                                <td>
+                                    @if($value -> trangThai== 0)
+                                        <small class="text-danger spkey" value="0">Chờ xác nhận</small>
+                                    @elseif($value -> trangThai== 1)
+                                        <small class="text-warning spkey" value="1">Thành công</small>
+                                    @elseif($value -> trangThai== 2)
+                                        <small class="text-primary spkey" value="2">Đã hủy</small>
+                                    @endif
+                                </td>
+
+                                {{--                            <td>--}}
+                                {{--                                @if($value->trangThai == 1)--}}
+                                {{--                                    <a href="{{ route('admin.naptien.activate', $value -> id,) }}">--}}
+                                {{--                                        <span class="badge badge-info">Xác nhận</span>--}}
+                                {{--                                    </a>--}}
+                                {{--                                @else--}}
+                                {{--                                    <a href="">--}}
+                                {{--                                        <span class="badge badge-danger">Xác nhận</span>--}}
+                                {{--                                    </a>--}}
+                                {{--                                @endif--}}
+
+                                {{--                                <a href="{{ route('admin.naptien.cancel', $value -> id) }}">--}}
+                                {{--                                    <span class="badge badge-danger">Hủy</span>--}}
+                                {{--                                </a>--}}
+                                {{--                            </td>--}}
+                                <td>
+                                    {{date_format(new DateTime($value->thoiGian), 'H:i:s d/m/Y ')}}
+                                </td>
+                            </tr>
+                        @endif
                     @endforeach
                     </tbody>
                 </table>

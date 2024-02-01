@@ -1,4 +1,29 @@
 <!-- Start Header Area -->
+@php
+    $phongnhantin=null;
+    if (\Illuminate\Support\Facades\Auth::check()){
+        $phongnhantin =DB::table('phongnhantin')
+            ->where(function ($query) {
+                $query->where('nd1', '=', Auth::user()->maNguoiDung)
+                    ->orWhere('nd2', '=', Auth::user()->maNguoiDung);
+            })
+            ->distinct()
+            ->get();
+//        $phongnhantin =  \Illuminate\Support\Facades\DB::table('phongnhantin')
+//            ->join('chitietphongnt','phongnhantin.id','=','chitietphongnt.idPhongNT')
+//            ->rightJoin('tinnhan','tinnhan.id','=','phongnhantin.id')
+//            ->where('maNguoiDung','=',\Illuminate\Support\Facades\Auth::user()->maNguoiDung)
+//            ->select('phongnhantin.*')
+//            ->get();
+    }
+@endphp
+@section('header')
+    <style>
+        .sssnw p {
+            white-space: nowrap;
+        }
+    </style>
+@endsection
 <header class="header-section d-none d-xl-block">
     <div class="header-wrapper">
         <div class="header-bottom header-bottom-color--green section-fluid sticky-header sticky-color--white">
@@ -38,34 +63,35 @@
                                         <a href="#">Chính sách<i class="fa fa-angle-down"></i></a>
                                         <ul class="sub-menu">
                                             <li><a href="/dieukhoan&chinhsach">Điều khoản & dịch vụ</a></li>
-                                            <li><a href="{{route('details1')}}">Chính sách đặt/trả sân</a></li>
+                                            <li><a href="{{route('chinhsach')}}">Chính sách đặt/trả sân</a></li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="{{Route('lienhe')}}">Liên hệ</a>
+                                        <a href="/lienhe">Liên hệ</a>
                                     </li>
                                     <li class="has-dropdown">
 
                                             @if(\Illuminate\Support\Facades\Auth::check())
-                                                <a href="#">{{\Illuminate\Support\Facades\Auth::check()?\Illuminate\Support\Facades\Auth::user()->ten:"Login"}}
+                                                <a href="#">{{\Illuminate\Support\Facades\Auth::check()?\Illuminate\Support\Facades\Auth::user()->ten:"Đăng nhập"}}
                                                 <i class="fa fa-angle-down"></i>
                                             @else
-                                                <a href="/login">{{\Illuminate\Support\Facades\Auth::check()?\Illuminate\Support\Facades\Auth::user()->ten:"Login"}}
+                                                <a href="/login">{{\Illuminate\Support\Facades\Auth::check()?\Illuminate\Support\Facades\Auth::user()->ten:"Đăng nhập"}}
                                             @endif
 
                                         </a>
                                         <!-- Sub Menu -->
                                         @if(\Illuminate\Support\Facades\Auth::check())
                                             <ul class="sub-menu">
+                                                <li><a href="{{route('user.naptien')}}">Số dư: {{\Illuminate\Support\Facades\Auth::user()->soDuTaiKhoan}}</a></li>
                                                 @if(@\Illuminate\Support\Facades\Auth::user()->maQuyen==1)
                                                     <li><a href="/admin">Quản trị</a></li>
                                                 @endif
                                                 @if(@\Illuminate\Support\Facades\Auth::user()->maQuyen==2)
-                                                    <li><a href="/CTV">Quản trị</a></li>
+                                                    <li><a href="/admin">Quản trị</a></li>
                                                 @endif
                                                 <li><a href="/profile">Thông tin cá nhân</a></li>
-                                                <li><a href="privacy-policy.html">Đơn hàng</a></li>
-                                                <li><a href="/logout">Logout</a></li>
+                                                <li><a href="/donhang">Quản lý dịch vụ</a></li>
+                                                <li><a href="/logout">Đăng xuất</a></li>
                                             </ul>
                                         @endif
                                     </li>
@@ -79,20 +105,43 @@
                             <li>
                                 <a href="#offcanvas-message" class="offcanvas-toggle">
                                     <i class="far fa-comment"></i>
-                                    <span class="item-count">3</span>
+{{--                                    <span class="item-count">3</span>--}}
                                 </a>
                             </li>
                             <li>
                                 <a href="#offcanvas-notification" class="offcanvas-toggle">
                                     <i class="far fa-bell"></i>
-                                    <span class="item-count">3</span>
+                                    @if(\Illuminate\Support\Facades\Auth::check())
+                                        <span class="item-count" id="thongbao_count">
+                                            {{ \Illuminate\Support\Facades\DB::table('thongbao')
+                                            ->where('maNguoiDung','=',\Illuminate\Support\Facades\Auth::user()->maNguoiDung)
+                                            ->where('daXem','=',0)
+                                            ->count()
+                                        }}
+                                        </span>
+                                    @endif
+{{--                                    <span class="item-count">3</span>--}}
                                 </a>
                             </li>
                             <li>
                                 <a href="/cart">
                                     <i class="icon-bag"></i>
                                     @if(\Illuminate\Support\Facades\Auth::check())
-                                        <span class="item-count">{{\Illuminate\Support\Facades\DB::table('giohang')->where('maNguoiDung','=',\Illuminate\Support\Facades\Auth::user()->maNguoiDung)->count()}}</span>
+                                        <span class="item-count">
+                                            {{ \Illuminate\Support\Facades\DB::table('giohang')
+                                            ->where(function ($query) {
+                                                $query->where('maVatPham', '<>', null)
+                                                    ->where('maSan', '=', null)
+                                                    ->where('maNguoiDung', '=', \Illuminate\Support\Facades\Auth::user()->maNguoiDung);
+                                            })
+                                            ->orWhere(function ($query) {
+                                                $query->where('maSan', '<>', null)
+                                                    ->where('maVatPham', '=', null)
+                                                    ->where('maNguoiDung', '=', \Illuminate\Support\Facades\Auth::user()->maNguoiDung);
+                                            })
+                                            ->count()
+                                        }}
+                                        </span>
                                     @endif
 
                                 </a>
@@ -147,20 +196,36 @@
                         <li>
                             <a href="#offcanvas-message" class="offcanvas-toggle">
                                 <i class="far fa-comment"></i>
-                                <span class="item-count">3</span>
+{{--                                <span class="item-count">3</span>--}}
                             </a>
                         </li>
                         <li>
                             <a href="#offcanvas-notification" class="offcanvas-toggle">
                                 <i class="far fa-bell"></i>
-                                <span class="item-count">3</span>
+{{--                                <span class="item-count">3</span>--}}
                             </a>
                         </li>
                         <li>
                             <a href="/cart">
                                 <i class="icon-bag"></i>
                                 @if(\Illuminate\Support\Facades\Auth::check())
-                                    <span class="item-count">{{\Illuminate\Support\Facades\DB::table('giohang')->where('maNguoiDung','=',\Illuminate\Support\Facades\Auth::user()->maNguoiDung)->count()}}</span>
+                                    <span class="item-count">
+                                        {{ \Illuminate\Support\Facades\DB::table('giohang')
+
+                                            ->where(function ($query) {
+                                                $query->where('maVatPham', '<>', null)
+                                                    ->where('maSan', '=', null)
+                                                    ->where('maNguoiDung', '=', \Illuminate\Support\Facades\Auth::user()->maNguoiDung);
+                                            })
+                                            ->orWhere(function ($query) {
+                                                $query->where('maSan', '<>', null)
+                                                    ->where('maVatPham', '=', null)
+                                                    ->where('maNguoiDung', '=', \Illuminate\Support\Facades\Auth::user()->maNguoiDung);
+                                            })
+                                            ->count()
+                                        }}
+
+                                    </span>
                                 @else
 {{--                                    <span class="item-count"></span>--}}
                                 @endif
@@ -209,28 +274,29 @@
                         <a href="#"><span>Chính sách</span></a>
                         <ul class="mobile-sub-menu">
                             <li><a href="/dieukhoan&chinhsach">Điều khoản & dịch vụ</a></li>
-                            <li><a href="{{route('details1')}}">Chính sách đặt/trả sân</a></li>
+                            <li><a href="{{route('chinhsach')}}">Chính sách đặt/trả sân</a></li>
                         </ul>
                     </li>
                     <li><a href="/lienhe">Liên hệ</a></li>
                     <li class="has-dropdown">
                         <!-- Sub Menu -->
                         @if(\Illuminate\Support\Facades\Auth::check())
-                            <a href="#">{{\Illuminate\Support\Facades\Auth::check()?\Illuminate\Support\Facades\Auth::user()->ten:"Login"}}
+                            <a href="#">{{\Illuminate\Support\Facades\Auth::check()?\Illuminate\Support\Facades\Auth::user()->ten:"Đăng nhập"}}
                             </a>
                             <ul class="mobile-sub-menu">
+                                <li><a href="{{route('user.naptien')}}">Số dư: {{\Illuminate\Support\Facades\Auth::user()->soDuTaiKhoan}}</a></li>
                                 @if(@\Illuminate\Support\Facades\Auth::user()->maQuyen==1)
                                     <li><a href="/admin">Quản trị</a></li>
                                 @endif
                                 @if(@\Illuminate\Support\Facades\Auth::user()->maQuyen==2)
-                                    <li><a href="/CTV">Quản trị</a></li>
+                                    <li><a href="/admin">Quản trị</a></li>
                                 @endif
                                 <li><a href="/profile">Thông tin cá nhân</a></li>
-                                <li><a href="privacy-policy.html">Đơn hàng</a></li>
-                                <li><a href="/logout">Logout</a></li>
+                                <li><a href="/donhang">Quản lý dịch vụ</a></li>
+                                <li><a href="/logout">Đăng xuất</a></li>
                             </ul>
                         @else
-                            <a href="/login"></a>
+                            <a href="/login">Đăng nhập</a>
                         @endif
                     </li>
                 </ul>
@@ -240,7 +306,6 @@
         <!-- Start Mobile contact Info -->
         <div class="mobile-contact-info">
             <div class="logo">
-                <a href="/"><img src="pageuser/assets/images/logo/logo_white.png" alt=""></a>
             </div>
 
             <address class="address">
@@ -259,7 +324,6 @@
             <ul class="user-link">
                 <li><a href="wishlist.html">Wishlist</a></li>
                 <li><a href="cart.html">Cart</a></li>
-{{--                <li><a href="checkout.html">Checkout</a></li>--}}
             </ul>
         </div>
         <!-- End Mobile contact Info -->
@@ -277,7 +341,6 @@
     <!-- Start Mobile contact Info -->
     <div class="mobile-contact-info">
         <div class="logo">
-            <a href="/"><img src="pageuser/assets/images/logo/logo_white.png" alt=""></a>
         </div>
 
         <address class="address">
@@ -287,7 +350,7 @@
         </address>
 
         <ul class="social-link">
-            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#"><i class="far fa-facebook"></i></a></li>
             <li><a href="#"><i class="fa fa-twitter"></i></a></li>
             <li><a href="#"><i class="fa fa-instagram"></i></a></li>
             <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
@@ -296,7 +359,6 @@
         <ul class="user-link">
             <li><a href="wishlist.html">Wishlist</a></li>
             <li><a href="cart.html">Cart</a></li>
-{{--            <li><a href="checkout.html">Checkout</a></li>--}}
         </ul>
     </div>
     <!-- End Mobile contact Info -->
@@ -316,7 +378,7 @@
             <li class="offcanvas-cart-item-single">
                 <div class="offcanvas-cart-item-block">
                     <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-3/default-1.jpg" alt=""
+                        <img src="{{asset('pageuser/assets/images/product/default/home-3/default-1.jpg')}}" alt=""
                              class="offcanvas-cart-image">
                     </a>
                     <div class="offcanvas-cart-item-content">
@@ -334,7 +396,7 @@
             <li class="offcanvas-cart-item-single">
                 <div class="offcanvas-cart-item-block">
                     <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-2/default-1.jpg" alt=""
+                        <img src="{{asset('pageuser/assets/images/product/default/home-2/default-1.jpg')}}" alt=""
                              class="offcanvas-cart-image">
                     </a>
                     <div class="offcanvas-cart-item-content">
@@ -352,7 +414,7 @@
             <li class="offcanvas-cart-item-single">
                 <div class="offcanvas-cart-item-block">
                     <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-3/default-1.jpg" alt=""
+                        <img src="{{asset('pageuser/assets/images/product/default/home-3/default-1.jpg')}}" alt=""
                              class="offcanvas-cart-image">
                     </a>
                     <div class="offcanvas-cart-item-content">
@@ -374,7 +436,6 @@
         </div>
         <ul class="offcanvas-cart-action-button">
             <li><a href="{{route('cart')}}" class="btn btn-block btn-pink">View Cart</a></li>
-{{--            <li><a href="compare.html" class=" btn btn-block btn-pink mt-5">Checkout</a></li>--}}
         </ul>
     </div> <!-- End  Offcanvas Addcart Wrapper -->
 
@@ -394,7 +455,7 @@
             <li class="offcanvas-wishlist-item-single">
                 <div class="offcanvas-wishlist-item-block">
                     <a href="#" class="offcanvas-wishlist-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-3/default-1.jpg" alt=""
+                        <img src="{{asset('pageuser/assets/images/product/default/home-3/default-1.jpg')}}" alt=""
                              class="offcanvas-wishlist-image">
                     </a>
                     <div class="offcanvas-wishlist-item-content">
@@ -412,7 +473,7 @@
             <li class="offcanvas-wishlist-item-single">
                 <div class="offcanvas-wishlist-item-block">
                     <a href="#" class="offcanvas-wishlist-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-2/default-1.jpg" alt=""
+                        <img src="{{asset('pageuser/assets/images/product/default/home-2/default-1.jpg')}}" alt=""
                              class="offcanvas-wishlist-image">
                     </a>
                     <div class="offcanvas-wishlist-item-content">
@@ -430,7 +491,7 @@
             <li class="offcanvas-wishlist-item-single">
                 <div class="offcanvas-wishlist-item-block">
                     <a href="#" class="offcanvas-wishlist-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-3/default-1.jpg" alt=""
+                        <img src="{{asset('pageuser/assets/images/product/default/home-3/default-1.jpg')}}" alt=""
                              class="offcanvas-wishlist-image">
                     </a>
                     <div class="offcanvas-wishlist-item-content">
@@ -464,69 +525,53 @@
     <div class="offcanvas-add-cart-wrapper">
         <h4 class="offcanvas-title">Tin nhắn</h4>
         <ul class="offcanvas-cart">
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-3/default-1.jpg" alt=""
-                             class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Car Wheel</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                            <span class="offcanvas-cart-item-details-price">$49.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-2/default-1.jpg" alt=""
-                             class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Car Vails</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">3 x </span>
-                            <span class="offcanvas-cart-item-details-price">$500.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-3/default-1.jpg" alt=""
-                             class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Shock Absorber</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                            <span class="offcanvas-cart-item-details-price">$350.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-        </ul>
-        <ul class="offcanvas-cart-action-button">
-            <li><a href="{{route('cart')}}" class="btn btn-block btn-pink">Xem tất cả tin nhắn</a></li>
-            {{--            <li><a href="compare.html" class=" btn btn-block btn-pink mt-5">Checkout</a></li>--}}
+            @if($phongnhantin!=null)
+                @foreach($phongnhantin as $pnt)
+                    @php
+                        if($pnt->nd1 != \Illuminate\Support\Facades\Auth::user()->maNguoiDung){
+                            $nd=\Illuminate\Support\Facades\DB::table('nguoidung')->where('maNguoiDung','=',$pnt->nd1)->select('maNguoiDung','ho','ten','hinhAnh')->first();
+                            $tinnhan = \Illuminate\Support\Facades\DB::table('tinnhan')
+                            ->join('phongnhantin','phongnhantin.id','=','tinnhan.idPhongNT')
+                            ->where('nd1','=',$nd->maNguoiDung)
+                            ->where('nd2','=',\Illuminate\Support\Facades\Auth::user()->maNguoiDung)
+                            ->orderBy('tinnhan.id','desc')
+                            ->first();
+                        }else{
+                            $nd=\Illuminate\Support\Facades\DB::table('nguoidung')->where('maNguoiDung','=',$pnt->nd2)->select('maNguoiDung','ho','ten','hinhAnh')->first();
+                            $tinnhan = \Illuminate\Support\Facades\DB::table('tinnhan')
+                            ->join('phongnhantin','phongnhantin.id','=','tinnhan.idPhongNT')
+                            ->where('nd2','=',$nd->maNguoiDung)
+                            ->where('nd1','=',\Illuminate\Support\Facades\Auth::user()->maNguoiDung)
+                            ->orderBy('tinnhan.id','desc')
+                            ->first();
+                        }
+                    @endphp
+                    @if($tinnhan!=null)
+                        <li class="offcanvas-cart-item-single">
+                            <div class="offcanvas-cart-item-block">
+                                <a href="#" class="offcanvas-cart-item-image-link">
+                                    <img style="border-radius: 50%" src="{{ $nd->hinhAnh != null ? asset('storage/' . $nd->hinhAnh) : 'https://static-00.iconduck.com/assets.00/avatar-default-icon-2048x2048-h6w375ur.png' }}" alt=""
+                                         class="offcanvas-cart-image">
+                                </a>
+                                <div class="offcanvas-cart-item-content">
+                                    <a href="/chat/{{$pnt->id}}" class="offcanvas-cart-item-link">
+                                        {{$nd->ho .' '.$nd->ten}}
+                                    </a>
+                                    <div class="offcanvas-cart-item-details" >
+                                    <span id="xemTN_{{$nd->maNguoiDung}}">
+                                        {!! $tinnhan !=null? ($tinnhan->maNguoiGui!=\Illuminate\Support\Facades\Auth::user()->maNguoiDung? '':'Bạn: ') . $tinnhan->noiDung:"<span style='color:red'>Chưa có tin nhắn<span>" !!}
+                                    </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                @endif
+                @endforeach
+            @endif
         </ul>
     </div> <!-- End  Offcanvas Addcart Wrapper -->
 
 </div> <!-- End  Offcanvas message Section -->
-
 <!-- Start Offcanvas notification Section -->
 <div id="offcanvas-notification" class="offcanvas offcanvas-rightside offcanvas-add-cart-section">
     <!-- Start Offcanvas Header -->
@@ -537,65 +582,40 @@
     <!-- Start  Offcanvas Addcart Wrapper -->
     <div class="offcanvas-add-cart-wrapper">
         <h4 class="offcanvas-title">Thông báo</h4>
+        @php
+        $thongbao=null;
+            if(\Illuminate\Support\Facades\Auth::check()){
+                $thongbao = \Illuminate\Support\Facades\DB::table('thongbao')
+                ->where('loaiTB','=',1)
+                ->OrWhere('maNguoiDung','=',\Illuminate\Support\Facades\Auth::user()->maNguoiDung)
+                ->orderBy('id','desc')
+                ->get();
+            }
+        @endphp
         <ul class="offcanvas-cart">
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-3/default-1.jpg" alt=""
-                             class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Car Wheel</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                            <span class="offcanvas-cart-item-details-price">$49.00</span>
+            @if($thongbao!=null)
+                @foreach($thongbao as $tb)
+                    <li class="offcanvas-cart-item-single" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-idtb="{{$tb->id}}" onclick="OpenMenuThongBao(this)">
+                        <div class="offcanvas-cart-item-block">
+                            <div class="offcanvas-cart-item-content">
+                                @if($tb->daXem==0)
+                                    <h4><span href="" class="offcanvas-cart-item-link" style="color: #ff964e">{!! $tb->tieuDe !!}</span></h4>
+                                @else
+                                    <h4><span href="" class="offcanvas-cart-item-link" style="color: #807878">{!! $tb->tieuDe !!}</span></h4>
+                                @endif
+
+                                <div class="offcanvas-cart-item-details">
+                                    {!! substr($tb->noiDung, 0, 50) !!}
+                                    <span class="offcanvas-cart-item-details-quantity">{{$tb->created_at}} </span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-2/default-1.jpg" alt=""
-                             class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Car Vails</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">3 x </span>
-                            <span class="offcanvas-cart-item-details-price">$500.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-            <li class="offcanvas-cart-item-single">
-                <div class="offcanvas-cart-item-block">
-                    <a href="#" class="offcanvas-cart-item-image-link">
-                        <img src="pageuser/assets/images/product/default/home-3/default-1.jpg" alt=""
-                             class="offcanvas-cart-image">
-                    </a>
-                    <div class="offcanvas-cart-item-content">
-                        <a href="#" class="offcanvas-cart-item-link">Shock Absorber</a>
-                        <div class="offcanvas-cart-item-details">
-                            <span class="offcanvas-cart-item-details-quantity">1 x </span>
-                            <span class="offcanvas-cart-item-details-price">$350.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="offcanvas-cart-item-delete text-right">
-                    <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>
-                </div>
-            </li>
-        </ul>
-        <ul class="offcanvas-cart-action-button">
-            <li><a href="{{route('cart')}}" class="btn btn-block btn-pink">View Cart</a></li>
-            {{--            <li><a href="compare.html" class=" btn btn-block btn-pink mt-5">Checkout</a></li>--}}
+{{--                        <div class="offcanvas-cart-item-delete text-right">--}}
+{{--                            <a href="#" class="offcanvas-cart-item-delete"><i class="fa fa-trash-o"></i></a>--}}
+{{--                        </div>--}}
+                    </li>
+                @endforeach
+            @endif
         </ul>
     </div> <!-- End  Offcanvas Addcart Wrapper -->
 
@@ -604,9 +624,29 @@
 <!-- Start Offcanvas Search Bar Section -->
 <div id="search" class="search-modal">
     <button type="button" class="close">×</button>
-    <form>
-        <input type="search" placeholder="Tìm kiếm bất cứ thứ gì ở đây" />
+    <form action="/timkiem">
+        <input type="search" name="key" placeholder="Tìm kiếm bất cứ thứ gì ở đây" />
         <button type="submit" class="btn btn-lg btn-pink">Search</button>
     </form>
+</div>
+<style>
+    .custom-alert {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        /*width: 60%;*/
+        background-color: transparent;
+        /*height: 80%;*/
+        transform: translate(-50%, -50%);
+        padding: 15px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 9999000;
+        display: none;
+    }
+</style>
+<div id="thongtinthongbao" class="custom-alert">
+
 </div>
 <!-- End Offcanvas Search Bar Section -->

@@ -31,23 +31,6 @@
                     </a>
                 </div>
             </div>
-            <div>
-                @if(session('del'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-danger">
-                        {{session('del')}}
-                    </div>
-                @endif
-                @if(session('updated'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">
-                        {{session('updated')}}
-                    </div>
-                @endif
-                @if(session('add'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">
-                        {{session('add')}}
-                    </div>
-                @endif
-            </div>
             <div class="card-body p-0">
                 <table class="table table-striped projects">
                     <thead>

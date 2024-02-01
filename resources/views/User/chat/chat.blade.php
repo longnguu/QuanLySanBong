@@ -279,63 +279,72 @@
         }
     </style>
 @endsection
+@php
+    $pnt=\Illuminate\Support\Facades\DB::table('phongnhantin')->where('id','=',$usid)->first();
+    if($pnt->nd1 != \Illuminate\Support\Facades\Auth::user()->maNguoiDung){
+        $nd=\Illuminate\Support\Facades\DB::table('nguoiDung')->where('maNguoiDung','=',$pnt->nd1)->select('maNguoiDung','ho','ten')->first();
+    }else{
+        $nd=\Illuminate\Support\Facades\DB::table('nguoiDung')->where('maNguoiDung','=',$pnt->nd2)->select('maNguoiDung','ho','ten')->first();
+    }
+@endphp
 @section('content')
+{{--    {{dd($usid)}}--}}
     <div class="container">
         <div class="row clearfix">
             <div class="col-lg-12">
                 <div class="card chat-app">
-                    <div id="plist" class="people-list">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-search"></i></span>
-                            </div>
-                            <input type="text" class="form-control" placeholder="Search...">
-                        </div>
-                        <ul class="list-unstyled chat-list mt-2 mb-0">
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Vincent Porter</div>
-                                    <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>
-                                </div>
-                            </li>
-                            <li class="clearfix active">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Aiden Chavez</div>
-                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Mike Thomas</div>
-                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Christian Kelly</div>
-                                    <div class="status"> <i class="fa fa-circle offline"></i> left 10 hours ago </div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Monica Ward</div>
-                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>
-                                </div>
-                            </li>
-                            <li class="clearfix">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">
-                                <div class="about">
-                                    <div class="name">Dean Henry</div>
-                                    <div class="status"> <i class="fa fa-circle offline"></i> offline since Oct 28 </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+{{--                    <div id="plist" class="people-list">--}}
+{{--                        <div class="input-group">--}}
+{{--                            <div class="input-group-prepend">--}}
+{{--                                <span class="input-group-text"><i class="fa fa-search"></i></span>--}}
+{{--                            </div>--}}
+{{--                            <input type="text" class="form-control" placeholder="Search...">--}}
+{{--                        </div>--}}
+{{--                        <ul class="list-unstyled chat-list mt-2 mb-0">--}}
+{{--                            <li class="clearfix">--}}
+{{--                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">--}}
+{{--                                <div class="about">--}}
+{{--                                    <div class="name">Vincent Porter</div>--}}
+{{--                                    <div class="status"> <i class="fa fa-circle offline"></i> left 7 mins ago </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="clearfix active">--}}
+{{--                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">--}}
+{{--                                <div class="about">--}}
+{{--                                    <div class="name">Aiden Chavez</div>--}}
+{{--                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="clearfix">--}}
+{{--                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">--}}
+{{--                                <div class="about">--}}
+{{--                                    <div class="name">Mike Thomas</div>--}}
+{{--                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="clearfix">--}}
+{{--                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">--}}
+{{--                                <div class="about">--}}
+{{--                                    <div class="name">Christian Kelly</div>--}}
+{{--                                    <div class="status"> <i class="fa fa-circle offline"></i> left 10 hours ago </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="clearfix">--}}
+{{--                                <img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt="avatar">--}}
+{{--                                <div class="about">--}}
+{{--                                    <div class="name">Monica Ward</div>--}}
+{{--                                    <div class="status"> <i class="fa fa-circle online"></i> online </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="clearfix">--}}
+{{--                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="avatar">--}}
+{{--                                <div class="about">--}}
+{{--                                    <div class="name">Dean Henry</div>--}}
+{{--                                    <div class="status"> <i class="fa fa-circle offline"></i> offline since Oct 28 </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
                     <div class="chat">
                         <div class="chat-header clearfix">
                             <div class="row">
@@ -344,50 +353,58 @@
                                         <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
                                     </a>
                                     <div class="chat-about">
-                                        <h6 class="m-b-0">Aiden Chavez</h6>
-                                        <small>Last seen: 2 hours ago</small>
+                                        <h6 class="m-b-0">{{$nd->ho . ' ' . $nd->ten}}</h6>
+{{--                                        <small>Last seen: 2 hours ago</small>--}}
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="chat-history">
                             <ul class="m-b-0">
-                                <li class="clearfix">
-                                    <div class="message-data text-right">
-                                        <span class="message-data-time">10:10 AM, Today</span>
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-                                    </div>
-                                    <div class="message other-message float-right"> Hi Aiden, how are you? How is the project coming along? </div>
-                                </li>
-                                <li class="clearfix">
-                                    <div class="message-data">
-                                        <span class="message-data-time">10:12 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">Are we meeting today?</div>
-                                </li>
-                                <li class="clearfix">
-                                    <div class="message-data">
-                                        <span class="message-data-time">10:15 AM, Today</span>
-                                    </div>
-                                    <div class="message my-message">Project has been already finished and I have results to show you.</div>
-                                </li>
-                                <?php $i=0?>
-                                @for($i=0;$i<=10;$i++)
-                                    <li class="clearfix">
-                                        <div class="message-data">
-                                            <span class="message-data-time">10:15 AM, Today</span>
-                                        </div>
-                                        <div class="message my-message">Project has been already finished and I have results to show you.</div>
-                                    </li>
-                                @endfor
+                                <?php
+                                if ($usid != null) {
+                                    $tinnhan = \Illuminate\Support\Facades\DB::table('tinnhan')
+                                        ->where('idPhongNT','=',$usid)
+                                        ->get();
+//                                    dd($tinnhan);
+                                }
+
+                                ?>
+                                @foreach($tinnhan as $tn)
+                                    @if($tn->maNguoiGui!=\Illuminate\Support\Facades\Auth::user()->maNguoiDung)
+                                        <li class="clearfix">
+                                            <div class="message-data text-right">
+                                                <span class="message-data-time">{{$tn->created_at}}</span>
+                                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                                            </div>
+                                            <div class="message other-message float-right">{{$tn->noiDung}}</div>
+                                        </li>
+                                    @else
+                                        <li class="clearfix">
+                                            <div class="message-data">
+                                                <span class="message-data-time">{{$tn->created_at}}</span>
+                                            </div>
+                                            <div class="message my-message">{{$tn->noiDung}}</div>
+                                        </li>
+                                    @endif
+                                @endforeach
+{{--                                <?php $i=0?>--}}
+{{--                                @for($i=0;$i<=10;$i++)--}}
+{{--                                    <li class="clearfix">--}}
+{{--                                        <div class="message-data">--}}
+{{--                                            <span class="message-data-time">10:15 AM, Today</span>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="message my-message">Project has been already finished and I have results to show you.</div>--}}
+{{--                                    </li>--}}
+{{--                                @endfor--}}
                             </ul>
                         </div>
                         <div class="chat-message clearfix">
                             <div class="input-group mb-0">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fa fa-send"></i></span>
+                                <div class="input-group-prepend" id="sendButton" >
+                                    <span class="input-group-text" style="height: 100%;"><i class="fa fa-send"></i></span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Enter text here...">
+                                <input type="text" id="messageInput" class="form-control" placeholder="Enter text here...">
                             </div>
                         </div>
                     </div>
@@ -399,36 +416,80 @@
 @section('footer')
     <script>
         $(document).ready(function() {
-            // Tự động cuộn xuống cuối khi có tin nhắn mới
             function scrollChatToBottom() {
                 var chatHistory = $('.chat-history');
                 chatHistory.scrollTop(chatHistory[0].scrollHeight);
             }
-
-            // Gọi hàm cuộn xuống cuối khi trang web được tải
             scrollChatToBottom();
-
-            // Xử lý khi có tin nhắn mới (đây chỉ là ví dụ, bạn cần điều chỉnh theo nhu cầu thực tế)
             $('#sendButton').on('click', function() {
-                // Thêm tin nhắn mới vào phần chat
-                $('.chat-history ul').append('<li>...new message...</li>');
-
-                // Cuộn xuống cuối sau khi thêm tin nhắn mới
-                scrollChatToBottom();
+                var messageContent = $('#messageInput').val();
+                var usid = "{{$usid}}";
+                // Lấy CSRF token từ trang
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                // Sử dụng AJAX để gửi tin nhắn lên máy chủ
+                $.ajax({
+                    url: '/send-message/{{$usid}}',
+                    method: 'get',
+                    data: {
+                        {{--"_token": "{{ csrf_token() }}",--}}
+                        message: messageContent,
+                        usid : usid,
+                    },
+                    success: function(response) {
+                        $('.chat-history ul').append('<li class="clearfix"><div class="message-data"><span class="message-data-time">Now</span></div><div class="message my-message">' + messageContent + '</div></li>');
+                        scrollChatToBottom();
+                        $('#messageInput').val('');
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
             });
-
-            // Xử lý khi người dùng nhấn Enter trong ô nhập tin nhắn
             $('#messageInput').on('keydown', function(event) {
                 if (event.keyCode === 13) { // 13 là mã phím Enter
                     event.preventDefault();
 
-                    // Thêm tin nhắn mới vào phần chat
-                    $('.chat-history ul').append('<li>...new message...</li>');
-
-                    // Cuộn xuống cuối sau khi thêm tin nhắn mới
-                    scrollChatToBottom();
+                    var messageContent = $('#messageInput').val();
+                    var usid = "{{$usid}}";
+                    // Lấy CSRF token từ trang
+                    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    // Sử dụng AJAX để gửi tin nhắn lên máy chủ
+                    $.ajax({
+                        url: '/send-message/{{$usid}}',
+                        method: 'get',
+                        data: {
+                            {{--"_token": "{{ csrf_token() }}",--}}
+                            message: messageContent,
+                            usid : usid,
+                        },
+                        success: function(response) {
+                            $('.chat-history ul').append('<li class="clearfix"><div class="message-data"><span class="message-data-time">Now</span></div><div class="message my-message">' + messageContent + '</div></li>');
+                            scrollChatToBottom();
+                            $('#messageInput').val('');
+                        },
+                        error: function(error) {
+                            console.error(error);
+                        }
+                    });
                 }
             });
         });
+    </script>
+    <script type="module">
+        Echo.private('chat.private.{{\Illuminate\Support\Facades\Auth::user()->maNguoiDung}}')
+            .listen('MessageSent', (e) => {
+                console.log(e);
+                $('.chat-history ul').append('<li class="clearfix"><div class="message-data text-right"><span class="message-data-time">'+e.message.created_at+'</span><img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar"></div><div class="message other-message float-right">'+e.message.noiDung+'</div></li>');
+            })
     </script>
 @endsection

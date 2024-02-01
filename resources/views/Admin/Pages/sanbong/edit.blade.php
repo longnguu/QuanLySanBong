@@ -1,15 +1,18 @@
-@extends('admin.layout', ['title' => 'Edit Category'])
+@extends('admin.layout', ['title' => 'Add Category'])
 @section('content')
+    @php
+        $cate = \Illuminate\Support\Facades\DB::table('coso')->get();
+    @endphp
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Chỉnh sửa danh mục</h1>
+                    <h1>Chỉnh sửa sân</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Edit Category</li>
+                        <li class="breadcrumb-item active">Add Category</li>
                     </ol>
                 </div>
             </div>
@@ -18,23 +21,38 @@
 
     <!-- Main content -->
     <section class="content">
-        <form action="{{ route("admin.category.edit", $cate -> maLoaiVP) }}" method="POST">
+        <form action="{{ route("admin.sanbong.edit", $product -> maSan) }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-md-12">
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Thông tin danh mục</h3>
+                            <h3 class="card-title">Thông tin sân</h3>
                         </div>
                         <div class="card-body">
-
                             <div class="form-group">
-                                <label for="inputName">Tên danh mục</label>
-                                <input value="{{ $cate -> tenLoaiVP }}" name="TenDM" type="text" id="inputName" class="form-control">
+                                <label for="inputName">Tên sân</label>
+                                <input name="tenSan" type="text" id="inputName" value="{{$product->tenSan}}" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label for="inputName">Mô tả</label>
-                                <textarea name="moTa" type="text"  id="inputName" class="form-control">{{$cate -> moTa}}</textarea>
+                                <textarea name="moTa" id="mota" type="text" id="inputName" class="form-control">{{$product->moTa}}</textarea>
+                            </div>
+                            <label for="inputStatus">Cơ sở</label>
+                            <select name="maCoSo" id="inputStatus" class="form-control custom-select">
+                                @foreach($cate as  $key => $vl)
+                                    <option value="{{ $vl->maCoSo }}" {{$vl->maCoSo==$product->maCoSo?"selected":""}}>{{ $vl->tenCoSo }}</option>
+                                @endforeach
+                            </select>
+                            <label for="inputLoaiSan">Loại sân</label>
+                            <select name="loaiSan" id="inputLoaiSan" class="form-control custom-select">
+                                <option value="5" {{$product->loaiSan==5?"selected":""}}>Sân 5 người</option>
+                                <option value="7" {{$product->loaiSan==7?"selected":""}}>Sân 7 người</option>
+                                <option value="11" {{$product->loaiSan==11?"selected":""}}>Sân 11 người</option>
+                            </select>
+                            <div class="form-group">
+                                <label for="inputName">Giá dịch vụ</label>
+                                <input name="giaDichVu" type="number" value="{{$product->giaDichVu}}" id="inputName" class="form-control" required>
                             </div>
                         </div>
                         <!-- /.card-body -->
@@ -44,11 +62,10 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <a href="{{route('admin.category.index')}}" class="btn btn-secondary">Hủy</a>
-                    <input type="submit" value="Chỉnh sửa" class="btn btn-success float-right">
+                    <a href="{{route('admin.sanbong.index')}}" class="btn btn-secondary">Hủy</a>
+                    <input type="submit" value="Thêm" class="btn btn-success float-right">
                 </div>
             </div>
         </form>
     </section>
-    <!-- /.content -->
 @endsection

@@ -1,6 +1,53 @@
 @extends('User.main')
 @section('head')
     <style>
+
+        .btn-checkbox {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .btn-secondary{
+            background-color: #b3d7ff!important;
+        }
+        .btn-primary{
+            background-color: #0a58ca!important;
+        }
+        .btn-danger{
+            background-color: red!important;
+        }
+
+        .btn-checkbox label {
+            width: 100%;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-checkbox input {
+            position: absolute;
+            clip: rect(0, 0, 0, 0);
+        }
+
+        .btn-group-toggle {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .modal-body {
+            padding: 15px;
+        }
+
+        .modal-footer {
+            justify-content: flex-start;
+            padding: 15px;
+        }
+
+        .btn-checkbox input:checked + label {
+            background-color: #007bff;
+            color: #fff;
+        }
         .lds-roller {
             display: inline-block;
             position: fixed;
@@ -137,7 +184,6 @@
             <button onclick="closeOverlay()">Đóng</button>
         </div>
     </div>
-    <div id="loading-overlay" class="lds-roller"><div></div><div></div><div></div></div>
     <div class="offcanvas-overlay"></div>
 
     <!-- ...:::: Start Breadcrumb Section:::... -->
@@ -197,13 +243,13 @@
 
 
                         <!-- Start Single Sidebar Widget -->
-                        <div class="sidebar-single-widget">
-                            <div class="sidebar-content">
-                                <a href="product-details-default.html" class="sidebar-banner img-hover-zoom">
-                                    <img class="img-fluid" src="pageuser/assets/images/banner/side-banner.jpg" alt="">
-                                </a>
-                            </div>
-                        </div> <!-- End Single Sidebar Widget -->
+{{--                        <div class="sidebar-single-widget">--}}
+{{--                            <div class="sidebar-content">--}}
+{{--                                <a href="product-details-default.html" class="sidebar-banner img-hover-zoom">--}}
+{{--                                    <img class="img-fluid" src="pageuser/assets/images/banner/side-banner.jpg" alt="">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                        </div> <!-- End Single Sidebar Widget -->--}}
 
                     </div> <!-- End Sidebar Area -->
                 </div>
@@ -259,17 +305,18 @@
                                     <div class="sort-select-list d-flex align-items-center" style="margin-top: 20px">
                                         <label class="mr-2">Thời gian thuê:</label>
                                         <div style="display: flex; align-items: center;">
-                                            <button onclick="decreaseValue()" >-</button>
+{{--                                            <button onclick="decreaseValue()" >-</button>--}}
                                             <input type="number" name="slthue" id="slthue" value="1" style="max-width: 70px; border: black; text-align: center;" oninput="filterSanBong1()" onkeydown="return false" />
-                                            <button onclick="increaseValue()" style="top:50%">+</button>
+{{--                                            <button onclick="increaseValue()" style="top:50%">+</button>--}}
+                                            Giờ
                                         </div>
                                         <fieldset>
-
-                                            <select name="loaihinh" id="loaihinh" onchange="filterSanBong1()">
-                                                <option value="1" selected="selected">Giờ</option>
-                                                <option value="7">Tuần</option>
-                                                <option value="30">Tháng</option>
-                                            </select>
+                                            <input type="hidden" name="loaihinh" id="loaihinh" value="1">
+{{--                                            <select name="loaihinh" id="loaihinh" onchange="filterSanBong1()">--}}
+{{--                                                <option value="1" selected="selected">Giờ</option>--}}
+{{--                                                <option value="7">Tuần</option>--}}
+{{--                                                <option value="30">Tháng</option>--}}
+{{--                                            </select>--}}
                                         </fieldset>
                                     </div>
                                 </div>
@@ -286,66 +333,6 @@
                                         <!-- Start Grid View Product -->
                                         <div class="tab-pane active show sort-layout-single" id="layout-3-grid">
                                             <div class="row">
-                                                    <!-- Start Product Default Single Item -->
-{{--                                                    @foreach($product as $pr)--}}
-{{--                                                        <div class="col-xl-4 col-sm-6 col-12 product-item"--}}
-{{--                                                             data-ma-coso="{{ $pr->maCoSo }}"--}}
-{{--                                                             data-gia-min="{{ $pr->giaDichVu }}"--}}
-{{--                                                             data-gia-max="{{ $pr->giaDichVu }}"--}}
-{{--                                                             data-abc="1">--}}
-{{--                                                            <div class="product-default-single-item product-color--pink swiper-slide">--}}
-{{--                                                            <div class="image-box">--}}
-{{--                                                                <a href="/productDetails?id={{$pr->maSan}}" class="image-link">--}}
-{{--                                                                    <img src="pageuser/assets/images/sanbong/sanbong1.jpg" alt="">--}}
-{{--                                                                    <img src="pageuser/assets/images/sanbong/sanbong2.jpg" alt="">--}}
-{{--                                                                </a>--}}
-{{--                                                                <div class="tag" >--}}
-{{--                                                                    @if($pr->trangThai==1)--}}
-{{--                                                                        <span style="background-color: springgreen">--}}
-{{--                                                                            Hoạt động--}}
-{{--                                                                        </span>--}}
-{{--                                                                    @else--}}
-{{--                                                                        <span>--}}
-{{--                                                                            Bảo trì--}}
-{{--                                                                        </span>--}}
-{{--                                                                    @endif--}}
-{{--                                                                </div>--}}
-
-{{--                                                                <div class="action-link">--}}
-{{--                                                                    <div class="action-link-left">--}}
-{{--                                                                        <a href="#" data-bs-toggle="modal"--}}
-{{--                                                                           data-bs-target="#modalAddcart">Thuê ngay</a>--}}
-{{--                                                                    </div>--}}
-{{--                                                                    <div class="action-link-right">--}}
-{{--                                                                        <a href="#" data-bs-toggle="modal"--}}
-{{--                                                                           data-bs-target="#modalQuickview"><i--}}
-{{--                                                                                class="icon-eye"></i></a>--}}
-{{--                                                                        <a href="wishlist.html"><i class="icon-heart"></i></a>--}}
-{{--                                                                        <a href="compare.html"><i class="icon-shuffle"></i></a>--}}
-{{--                                                                    </div>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="content">--}}
-{{--                                                                <div class="content-left">--}}
-{{--                                                                    <h6 class="title"><a href="/productDetails?id={{$pr->maSan}}">{{$pr->tenSan}}</a></h6>--}}
-{{--                                                                    <ul class="review-star">--}}
-{{--                                                                        <li class="fill"><i class="ion-android-star"></i></li>--}}
-{{--                                                                        <li class="fill"><i class="ion-android-star"></i></li>--}}
-{{--                                                                        <li class="fill"><i class="ion-android-star"></i></li>--}}
-{{--                                                                        <li class="fill"><i class="ion-android-star-half"></i></li>--}}
-{{--                                                                        <li class="empty"><i class="ion-android-star-half"></i></li>--}}
-{{--                                                                    </ul>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div class="content-right">--}}
-{{--                                                                    <span class="price">--}}
-{{--                                                                        {{ number_format($pr->giaDichVu, "0", "0", ".") }} VNĐ/h--}}
-{{--                                                                    </span>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                        </div>--}}
-{{--                                                    @endforeach--}}
-                                                    <!-- End Product Default Single Item -->
                                             </div>
                                         </div> <!-- End Grid View Product -->
 
@@ -379,7 +366,7 @@
                                                                 <p>{{$pr->moTa}}</p>
                                                                 <div class="product-action-icon-link-list">
                                                                     <a href="#" data-bs-toggle="modal"
-                                                                       data-bs-target="#modalAddcart"
+                                                                       data-bs-target="#"
                                                                        class="btn btn-lg btn-black-default-hover">Add to
                                                                         cart</a>
                                                                     <a href="#" data-bs-toggle="modal"
@@ -413,6 +400,7 @@
 @endsection
 @section('footer')
     <script>
+
         document.addEventListener("DOMContentLoaded", function () {
             var currentDateTime = new Date();
             currentDateTime.setHours(currentDateTime.getHours() + 8);
@@ -469,6 +457,7 @@
             var startDateInput = document.getElementById("NBD");
             var slthue = document.getElementById("slthue").value;
             var time=startDateInput.value.replace("T", " ");
+            var thongbao = document.getElementById("thongbaothem");
 
             var url = "{{ route('user.addtocartt') }}";
             var data = {
@@ -483,6 +472,57 @@
                 dataType: "html",
                 data: data,
                 success: function(data) {
+                    @if(\Illuminate\Support\Facades\Auth::check())
+                        toastr.info(JSON.parse(data).thongbao);
+                    @else
+                        toastr.error("Bạn phải đăng nhập trước");
+                    @endif
+                },
+                error: function() {
+                    alert("Lỗi khi tải dữ liệu.");
+                }
+            });
+
+
+        }
+        function AjaxCartNangCao(clickedElement,ngay,thu){
+            var maSan = $(clickedElement).data('masan');
+            // console.log(maSan);
+            var loaihinh = document.getElementById("loaihinh").value;
+            var startDateInput = document.getElementById("NBD");
+            var slthue = document.getElementById("slthue").value;
+            var time=startDateInput.value.replace("T", " ");
+            var thongbao = document.getElementById("AjaxNC");
+            if ($(clickedElement).is("select")) {
+                var ngay = $(clickedElement).val();
+            }
+
+
+            var url = "{{ route('user.addtocarttNC') }}";
+            var data = {
+                maSan:maSan,
+                time:time,
+                slthue:slthue,
+                loaihinh:loaihinh,
+                ngay:ngay,
+                thu:thu,
+            };
+            console.log(data)
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: "html",
+                data: data,
+                success: function(data) {
+                    if(thu!=null && ngay != null){
+                        // console.log(dat);
+                        thongbao.style.display='none';
+                        toastr.info(JSON.parse(data).thongbao);
+                    }else{
+                        thongbao.innerHTML="";
+                        thongbao.innerHTML=data;
+                        thongbao.style.display='block';
+                    }
 
                 },
                 error: function() {
@@ -572,6 +612,43 @@
             var inputElement = document.getElementById("slthue");
             inputElement.stepDown();
             filterSanBong1();
+        }
+    </script>
+    <div id="AjaxNC" class="custom-alert">
+
+    </div>
+
+    <script>
+
+        function getSelectedDays(btn) {
+            var selectedDays = [];
+            var selectedDays1 = [];
+            $(".btn-checkbox input:checked").each(function() {
+                selectedDays.push($(this).parent().text().trim());
+                selectedDays1.push($(this).val());
+            });
+            var ngay = document.getElementById('ngayyy').value;
+
+            console.log(ngay,selectedDays1,selectedDays);
+            if(selectedDays1.length==0){
+                toastr.error("Vui lòng chọn ít nhất 1 ngày");
+            }else{
+                AjaxCartNangCao(btn,ngay,selectedDays1);
+            }
+        }
+        function updateButtonColor(checkbox) {
+            var label = $(checkbox).parent();
+            if (checkbox.checked) {
+                label.addClass("btn-primary");
+                label.removeClass("btn-secondary");
+            } else {
+                label.removeClass("btn-primary");
+                label.addClass("btn-secondary");
+            }
+        }
+        function hiddenKK(){
+            var thongbao = document.getElementById("AjaxNC");
+            thongbao.style.display="none";
         }
     </script>
 @endsection

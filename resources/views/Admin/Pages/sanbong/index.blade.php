@@ -31,32 +31,32 @@
                     </a>
                 </div>
             </div>
-            <div>
-                @if(session('del'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-danger">
-                        {{session('del')}}
-                    </div>
-                @endif
-                @if(session('updated'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">
-                        {{session('updated')}}
-                    </div>
-                @endif
-                @if(session('add'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">
-                        {{session('add')}}
-                    </div>
-                @endif
-            </div>
+{{--            <div>--}}
+{{--                @if(session('del'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-danger">--}}
+{{--                        {{session('del')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--                @if(session('updated'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">--}}
+{{--                        {{session('updated')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--                @if(session('add'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">--}}
+{{--                        {{session('add')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--            </div>--}}
             <div class="card-body p-0">
                 <table class="table table-striped projects">
                     <thead>
                     <tr>
                         <th style="">
-                            ID
+                            Mã sân
                         </th>
                         <th style="">
-                            Danh mục
+                            Tên sân
                         </th>
                         <th style="">
                             Mô tả
@@ -78,20 +78,20 @@
                                 {{ $value -> tenSan }}
                             </td>
                             <td>
-                                {{ $value -> moTa }}
+                                {!! $value -> moTa !!}
                             </td>
                             <td class="project-state">
                                 @if($value -> trangThai == 1)
-                                    <a href="{{ route("admin.product.active",  $value -> maSan ) }}"><span
+                                    <a href="{{ route("admin.sanbong.active",  $value -> maSan ) }}"><span
                                             class="badge badge-primary">Hoạt động</span></a>
                                 @else
-                                    <a href="{{ route("admin.product.active",  $value -> maSan ) }}"><span
+                                    <a href="{{ route("admin.sanbong.active",  $value -> maSan ) }}"><span
                                             class="badge badge-danger">Bảo trì</span></a>
                                 @endif
                             </td>
                             <td class="project-actions text-right">
                                 <a class="btn btn-info btn-sm"
-                                   href="{{ route("admin.coso.edit",  $value -> maSan ) }}">
+                                   href="{{ route("admin.sanbong.edit",  $value -> maSan ) }}">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit

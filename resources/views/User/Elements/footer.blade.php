@@ -4,7 +4,7 @@
         <div class="footer-top">
             <div class="container">
                 <div class="row mb-n6">
-                    <div class="col-lg-3 col-sm-6 mb-6">
+                    <div class="col-lg-4 col-sm-6 mb-6">
                         <!-- Start Footer Single Item -->
                         <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
                              data-aos-delay="0">
@@ -18,7 +18,7 @@
                         </div>
                         <!-- End Footer Single Item -->
                     </div>
-                    <div class="col-lg-3 col-sm-6 mb-6">
+                    <div class="col-lg-4 col-sm-6 mb-6">
                         <!-- Start Footer Single Item -->
                         <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
                              data-aos-delay="200">
@@ -31,7 +31,7 @@
                         </div>
                         <!-- End Footer Single Item -->
                     </div>
-                    <div class="col-lg-3 col-sm-6 mb-6">
+                    <div class="col-lg-4 col-sm-6 mb-6">
                         <!-- Start Footer Single Item -->
                         <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
                              data-aos-delay="400">
@@ -43,23 +43,23 @@
                         </div>
                         <!-- End Footer Single Item -->
                     </div>
-                    <div class="col-lg-3 col-sm-6 mb-6">
-                        <!-- Start Footer Single Item -->
-                        <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"
-                             data-aos-delay="600">
-                            <h5 class="title">Về chúng tôi</h5>
-                            <div class="footer-about">
-                                <p>We are a team of designers and developers that create high quality Magento,
-                                    Prestashop, Opencart.</p>
+{{--                    <div class="col-lg-3 col-sm-6 mb-6">--}}
+{{--                        <!-- Start Footer Single Item -->--}}
+{{--                        <div class="footer-widget-single-item footer-widget-color--golden" data-aos="fade-up"--}}
+{{--                             data-aos-delay="600">--}}
+{{--                            <h5 class="title">Về chúng tôi</h5>--}}
+{{--                            <div class="footer-about">--}}
+{{--                                <p>We are a team of designers and developers that create high quality Magento,--}}
+{{--                                    Prestashop, Opencart.</p>--}}
 
-                                <address class="address">
-                                    <span>Address: Your address goes here.</span>
-                                    <span>Email: demo@example.com</span>
-                                </address>
-                            </div>
-                        </div>
-                        <!-- End Footer Single Item -->
-                    </div>
+{{--                                <address class="address">--}}
+{{--                                    <span>Address: Your address goes here.</span>--}}
+{{--                                    <span>Email: demo@example.com</span>--}}
+{{--                                </address>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <!-- End Footer Single Item -->--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 <div class="row mb-n6">
                     <div class="col-xl-3 col-lg-4 col-md-6 mb-6">
                         <div class="footer-social" data-aos="fade-up" data-aos-delay="0">
-                            <h4 class="title">FOLLOW US</h4>
+                            <h4 class="title">Theo dõi</h4>
                             <ul class="footer-social-link">
                                 <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter"></i></a></li>
@@ -80,19 +80,19 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-xl-7 col-lg-6 col-md-6 mb-6">
-                        <div class="footer-newsletter" data-aos="fade-up" data-aos-delay="200">
-                            <h4 class="title">DON'T MISS OUT ON THE LATEST</h4>
-                            <div class="form-newsletter">
-                                <form action="#" method="post">
-                                    <div class="form-fild-newsletter-single-item input-color--golden">
-                                        <input type="email" placeholder="Your email address..." required>
-                                        <button type="submit">SUBSCRIBE!</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
+{{--                    <div class="col-xl-7 col-lg-6 col-md-6 mb-6">--}}
+{{--                        <div class="footer-newsletter" data-aos="fade-up" data-aos-delay="200">--}}
+{{--                            <h4 class="title">DON'T MISS OUT ON THE LATEST</h4>--}}
+{{--                            <div class="form-newsletter">--}}
+{{--                                <form action="#" method="post">--}}
+{{--                                    <div class="form-fild-newsletter-single-item input-color--golden">--}}
+{{--                                        <input type="email" placeholder="Your email address..." required>--}}
+{{--                                        <button type="submit">SUBSCRIBE!</button>--}}
+{{--                                    </div>--}}
+{{--                                </form>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
             </div>
         </div>
@@ -153,7 +153,7 @@
 {{--                                    </div>--}}
 {{--                                </div>--}}
                                 <div class="col-md-10" style="align-content: center">
-                                    <div class="modal-add-cart-info"><i class="fa fa-check-square"></i>Thêm vào giỏ hàng thành công</div>
+                                    <div class="modal-add-cart-info"><i class="fa fa-check-square"></i><span id="thongbaothem">Thêm vào giỏ hàng thành công</span></div>
                                     <div class="modal-add-cart-product-cart-buttons">
                                         <a href="{{route('cart')}}">View Cart</a>
 {{--                                        <a href="checkout.html">Checkout</a>--}}
@@ -177,6 +177,7 @@
 </div> <!-- End Modal Add cart -->
 
 
+
 <!-- Start Modal Add cart -->
 <div class="modal fade" id="modalAddcart1" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-centered modal-xl" role="document">
@@ -197,7 +198,7 @@
                                 <div class="col-md-4">
                                     <div class="modal-add-cart-product-img">
                                         <img class="img-fluid"
-                                            src="pageuser/assets/images/sanbong/sanbong1.jpg" alt="">
+                                            src="{{asset('pageuser/assets/images/sanbong/sanbong1.jpg')}}" alt="">
                                     </div>
                                 </div>
                                 <div class="col-md-10" style="align-content: center">
@@ -258,22 +259,22 @@
                                 <div class="product-large-image modal-product-image-large swiper-container">
                                     <div class="swiper-wrapper">
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="pageuser/assets/images/product/default/home-1/default-1.jpg" alt="">
+                                            <img src="{{asset('pageuser/assets/images/product/default/home-1/default-2.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="pageuser/assets/images/product/default/home-1/default-2.jpg" alt="">
+                                            <img src="{{asset('pageuser/assets/images/product/default/home-1/default-2.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="pageuser/assets/images/product/default/home-1/default-3.jpg" alt="">
+                                            <img src="{{asset('pageuser/assets/images/product/default/home-1/default-3.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="pageuser/assets/images/product/default/home-1/default-4.jpg" alt="">
+                                            <img src="{{asset('pageuser/assets/images/product/default/home-1/default-4.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="pageuser/assets/images/product/default/home-1/default-5.jpg" alt="">
+                                            <img src="{{asset('pageuser/assets/images/product/default/home-1/default-5.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-large-image swiper-slide img-responsive">
-                                            <img src="pageuser/assets/images/product/default/home-1/default-6.jpg" alt="">
+                                            <img src="{{asset('pageuser/assets/images/product/default/home-1/default-6.jpg')}}" alt="">
                                         </div>
                                     </div>
                                 </div>
@@ -284,27 +285,27 @@
                                     <div class="swiper-wrapper">
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                 src="pageuser/assets/images/product/default/home-1/default-1.jpg" alt="">
+                                                 src="{{asset('pageuser/assets/images/product/default/home-1/default-2.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                 src="pageuser/assets/images/product/default/home-1/default-2.jpg" alt="">
+                                                 src="{{asset('pageuser/assets/images/product/default/home-1/default-2.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                 src="pageuser/assets/images/product/default/home-1/default-3.jpg" alt="">
+                                                 src="{{asset('pageuser/assets/images/product/default/home-1/default-3.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                 src="pageuser/assets/images/product/default/home-1/default-4.jpg" alt="">
+                                                 src="{{asset('pageuser/assets/images/product/default/home-1/default-4.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                 src="pageuser/assets/images/product/default/home-1/default-5.jpg" alt="">
+                                                 src="{{asset('pageuser/assets/images/product/default/home-1/default-5.jpg')}}" alt="">
                                         </div>
                                         <div class="product-image-thumb-single swiper-slide">
                                             <img class="img-fluid"
-                                                 src="pageuser/assets/images/product/default/home-1/default-6.jpg" alt="">
+                                                 src="{{asset('pageuser/assets/images/product/default/home-1/default-6.jpg')}}" alt="">
                                         </div>
                                     </div>
                                     <!-- Add Arrows -->
@@ -403,6 +404,25 @@
         </div>
     </div>
 </div> <!-- End Modal Quickview cart -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông Báo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Nội dung thông báo sẽ được hiển thị ở đây -->
+                Xin chào! Đây là một thông báo từ modal Bootstrap.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <!-- Các nút hoặc hành động khác có thể được thêm vào đây -->
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- ::::::::::::::All JS Files here :::::::::::::: -->
 <!-- Global Vendor, plugins JS -->
@@ -426,9 +446,108 @@
 <script src="pageuser/assets/js/plugins/ajax-mail.js"></script> -->
 
 <!-- Use the minified version files listed below for better performance and remove the files listed above -->
+<script>
+    function number_format(number, decimals, decPoint, thousandsSep) {
+        decimals = decimals || 0;
+        number = parseFloat(number);
+
+        if (!decPoint || !thousandsSep) {
+            decPoint = '.';
+            thousandsSep = ',';
+        }
+
+        var roundedNumber = Math.pow(10, decimals);
+        number = Math.round(number * roundedNumber) / roundedNumber;
+        number = number.toFixed(decimals);
+
+        var parts = number.split('.');
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSep);
+
+        return parts.join(decPoint);
+    }
+    function OpenMenuThongBao(element){
+        var thongbao = document.getElementById("thongtinthongbao");
+        var idtb = $(element).data('idtb');
+        var thongbaocount = document.getElementById("thongbao_count");
+        var url = "{{ route('user.xemthongbao') }}";
+        var data = {
+            id:idtb,
+        };
+        console.log(data)
+        $.ajax({
+            url: url,
+            type: "GET",
+            dataType: "html",
+            data: data,
+            success: function(data) {
+
+                    thongbao.innerHTML="";
+                    thongbao.innerHTML=data;
+                    thongbao.style.display='block';
+            },
+            error: function() {
+                alert("Lỗi khi tải dữ liệu.");
+            }
+        });
+    }
+    function hiddenTB(){
+        var thongbao = document.getElementById("thongtinthongbao");
+        thongbao.style.display="none";
+    }
+</script>
 <script src="{{asset('pageuser/assets/js/vendor/vendor.min.js')}}"></script>
 <script src="{{asset('pageuser/assets/js/plugins/plugins.min.js')}}"></script>
 
 <!-- Main JS -->
 <script src="{{asset('pageuser/assets/js/main.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+        }
+
+</script>
+@include('User.Elements.alert')
+@vite('resources/js/app.js')
+<script type="module">
+    @if(\Illuminate\Support\Facades\Auth::check())
+        Echo.private('chat.private.{{\Illuminate\Support\Facades\Auth::user()->maNguoiDung}}')
+            .listen('MessageSent', (e) => {
+                // console.log(e);
+                document.getElementById('xemTN_' + e.message.maNguoiGui).innerHTML = e.message.noiDung;
+                toastr.info("Bạn có 1 tin nhắn mới")
+                // $('.chat-history ul').append('<li class="clearfix"><div class="message-data text-right"><span class="message-data-time">'+e.message.created_at+'</span><img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar"></div><div class="message other-message float-right">'+e.message.noiDung+'</div></li>');
+            })
+        Echo.private('callbackBank.private.{{\Illuminate\Support\Facades\Auth::user()->maNguoiDung}}')
+            .listen('BankCallBack', (e) => {
+                console.log(e);
+                toastr.info(e.message)
+            })
+        Echo.private('thongbao1.private.{{\Illuminate\Support\Facades\Auth::user()->maNguoiDung}}')
+            .listen('ThongBao', (e) => {
+                console.log(e);
+                toastr.info("Bạn có 1 thông báo mới")
+            })
+        Echo.private('thongbao2.private.{{\Illuminate\Support\Facades\Auth::user()->maQuyen}}')
+            .listen('ThongBao', (e) => {
+                console.log(e);
+                toastr.info("Bạn có 1 thông báo mới")
+            })
+    @endif
+</script>
 @yield('footer')

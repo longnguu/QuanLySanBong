@@ -65,17 +65,6 @@
                                 </div>
                             </div>
                         </div> <!-- End Single Sidebar Widget -->
-
-
-                        <!-- Start Single Sidebar Widget -->
-                        <div class="sidebar-single-widget">
-                            <div class="sidebar-content">
-                                <a href="product-details-default.html" class="sidebar-banner img-hover-zoom">
-                                    <img class="img-fluid" src="pageuser/assets/images/banner/side-banner.jpg" alt="">
-                                </a>
-                            </div>
-                        </div> <!-- End Single Sidebar Widget -->
-
                     </div> <!-- End Sidebar Area -->
                 </div>
                 <div class="col-lg-9" id="callAjax" style="margin-bottom: 10%">
@@ -119,32 +108,6 @@
                             </div>
                         </div>
                     </div> <!-- End Section Content -->
-                    <div class="shop-sort-section">
-                        <div class="container">
-                            <div class="row">
-                                <div class="sort-box d-flex justify-content-between align-items-md-center align-items-start flex-md-row flex-column"
-                                     data-aos="fade-up" data-aos-delay="0">
-                                    <!-- Start Sort tab Button -->
-                                    <div class="d-flex align-items-center">
-                                        <label class="mr-2" for="NBD">Chọn thời gian thuê:</label>
-                                        <input type="datetime-local" id="NBD" name="NBD" oninput="setMinEndDate()" step="86400" min="{{ now()->format('Y-m-d\TH:i') }}">
-                                    </div>
-                                    <div class="sort-select-list d-flex align-items-center" style="margin-top: 20px">
-                                        <label class="mr-2">Loại hình thuê:</label>
-                                        <fieldset>
-                                            <select name="loaihinh" id="loaihinh" onchange="filterSanBong1()">
-                                                <option value="1" selected="selected">Thuê theo giờ</option>
-                                                <option value="7">Thuê theo tuần</option>
-                                                <option value="30">Thuê theo tháng</option>
-                                            </select>
-                                        </fieldset>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- End Section Content -->
-
-                    <!-- Start Tab Wrapper -->
                     <div class="sort-product-tab-wrapper">
                         <div class="container">
                             <div class="row">
@@ -187,19 +150,9 @@
                                                                 <p>{{$pr->moTa}}</p>
                                                                 <div class="product-action-icon-link-list">
                                                                     <a href="#" data-bs-toggle="modal"
-                                                                       data-bs-target="#modalAddcart"
+                                                                       data-bs-target="#"
                                                                        class="btn btn-lg btn-black-default-hover">Add to
                                                                         cart</a>
-                                                                    <a href="#" data-bs-toggle="modal"
-                                                                       data-bs-target="#modalQuickview"
-                                                                       class="btn btn-lg btn-black-default-hover"><i
-                                                                            class="icon-magnifier"></i></a>
-                                                                    <a href="wishlist.html"
-                                                                       class="btn btn-lg btn-black-default-hover"><i
-                                                                            class="icon-heart"></i></a>
-                                                                    <a href="compare.html"
-                                                                       class="btn btn-lg btn-black-default-hover"><i
-                                                                            class="icon-shuffle"></i></a>
                                                                 </div>
                                                             </div>
                                                         </div> <!-- End Product Defautlt Single -->
@@ -222,12 +175,6 @@
 @section('footer')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            var currentDateTime = new Date();
-            currentDateTime.setHours(currentDateTime.getHours() + 8);
-            currentDateTime.setMinutes(0);
-            currentDateTime.setSeconds(0);
-            var formattedDateTime = currentDateTime.toISOString().slice(0, 16).replace("T", " ");
-            document.getElementById("NBD").value = formattedDateTime;
             filterSanBong1();
         });
         function setMinEndDate() {
@@ -271,19 +218,14 @@
                 }
                 return giaMin >= sliderMinValue && giaMax <= sliderMaxValue;
             }).show();
-            count.innerHTML= displayProduct.length/2 + " Sân sẵn sàng sử dụng";
+            count.innerHTML= displayProduct.length/2 + " sản phâm";
         }
         function AjaxCart(clickedElement){
             var maSan = $(clickedElement).data('masan');
-            var loaihinh = document.getElementById("loaihinh").value;
-            var startDateInput = document.getElementById("NBD");
-            var time=startDateInput.value.replace("T", " ");
-
-            var url = "{{ route('user.addtocartt') }}";
+            var thongbao = document.getElementById("thongbaothem");
+            var url = "{{ route('user.addtocart') }}";
             var data = {
                 maSan:maSan,
-                time:time,
-                loaihinh:loaihinh
             };
             $.ajax({
                 url: url,
@@ -291,29 +233,29 @@
                 dataType: "html",
                 data: data,
                 success: function(data) {
+                    @if(\Illuminate\Support\Facades\Auth::check())
+                        toastr.info(JSON.parse(data).thongbao);
+                    @else
+                        toastr.error("Bạn phải đăng nhập trước");
+                    @endif
                 },
                 error: function() {
                     alert("Lỗi khi tải dữ liệu.");
                 }
             });
-
-
         }
         function filterSanBong1(){
-            var loaihinh = document.getElementById("loaihinh").value;
-            var startDateInput = document.getElementById("NBD");
-            var time=startDateInput.value.replace("T", " ");
+            {{--var loaihinh = document.getElementById("loaihinh").value;--}}
+            {{--var startDateInput = document.getElementById("NBD");--}}
+            {{--var time=startDateInput.value.replace("T", " ");--}}
             var url = "{{ route('filterSP') }}";
-            var data = {
-                time:time,
-                loaihinh:loaihinh
-            };
             $.ajax({
                 url: url,
                 type: "GET",
                 dataType: "html",
-                data: data,
+                // data: data,
                 success: function(data) {
+                    console.log(data);
                     var $noidung = document.getElementById('callAjax1');
                     $noidung.innerHTML=data;
                     filterSanBong();

@@ -27,7 +27,7 @@
                         <div class="action-link">
                             <div class="action-link-left">
                                 <a href="#" data-bs-toggle="modal"
-                                   data-bs-target="#modalAddcart" data-masan="{{$pr->maVatPham}}" onclick="AjaxCart(this)">Thêm vào giỏ hàng</a>
+                                   data-bs-target="#" data-masan="{{$pr->maVatPham}}" onclick="AjaxCart(this)">Thêm vào giỏ hàng</a>
                             </div>
                             {{--                            <div class="action-link-left">--}}
                             {{--                                <a href="#" data-bs-toggle="modal"--}}
@@ -103,21 +103,21 @@
                             <li class="empty"><i class="ion-android-star"></i></li>
                         </ul>
                         <span class="product-list-price">{{ number_format($pr->donGiaBan, "0", "0", ".") }} VNĐ</span>
-                        <p>{{$pr->moTa}}</p>
+                        <p>{!! $pr->moTa !!}</p>
                         <div class="product-action-icon-link-list">
                             <a href="#" data-bs-toggle="modal"
-                               data-bs-target="#modalAddcart"
-                               class="btn btn-lg btn-black-default-hover">Thêm vào giỏ hàng</a>
-                                <a href="#" data-bs-toggle="modal"
-                                   data-bs-target="#modalQuickview"
-                                   class="btn btn-lg btn-black-default-hover"><i
-                                        class="icon-magnifier"></i></a>
-                                <a href="wishlist.html"
-                                   class="btn btn-lg btn-black-default-hover"><i
-                                        class="icon-heart"></i></a>
-                                <a href="compare.html"
-                                   class="btn btn-lg btn-black-default-hover"><i
-                                        class="icon-shuffle"></i></a>
+                               data-bs-target="#"
+                               class="btn btn-lg btn-black-default-hover" onclick="AjaxCart(this)">Thêm vào giỏ hàng</a>
+{{--                                <a href="#" data-bs-toggle="modal"--}}
+{{--                                   data-bs-target="#modalQuickview"--}}
+{{--                                   class="btn btn-lg btn-black-default-hover"><i--}}
+{{--                                        class="icon-magnifier"></i></a>--}}
+{{--                                <a href="wishlist.html"--}}
+{{--                                   class="btn btn-lg btn-black-default-hover"><i--}}
+{{--                                        class="icon-heart"></i></a>--}}
+{{--                                <a href="compare.html"--}}
+{{--                                   class="btn btn-lg btn-black-default-hover"><i--}}
+{{--                                        class="icon-shuffle"></i></a>--}}
                         </div>
                     </div>
                 </div> <!-- End Product Defautlt Single -->

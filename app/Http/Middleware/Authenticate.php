@@ -13,6 +13,8 @@ class Authenticate extends Middleware
     protected function redirectTo(Request $request): ?string
     {
         if (! $request->expectsJson()) {
+            \Illuminate\Support\Facades\Session::flash('message', 'Bạn cần đăng nhập trước!');
+            \Illuminate\Support\Facades\Session::flash('message_type', 'error');
             return route('login');
         }
     }

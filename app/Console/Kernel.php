@@ -13,6 +13,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
+        $schedule->command('fetch:transactions')->everyFifteenSeconds();
+        $schedule->command('app:ktra-don-loi')->everyFifteenSeconds();
     }
 
     /**

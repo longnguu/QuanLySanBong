@@ -19,7 +19,8 @@ class isAdmin
     public function handle(Request $request, Closure $next,...$roles)
     {
         if (!Auth::check()) {
-            Session::flash("error",'Bạn phải đăng nhập mới có thể vào trang này.');
+            \Illuminate\Support\Facades\Session::flash('message', 'Bạn cần đăng nhập trước!');
+            \Illuminate\Support\Facades\Session::flash('message_type', 'error');
             return redirect()->route('login');
         }
 //        if(Auth::user()->password==null){
@@ -39,13 +40,19 @@ class isAdmin
         if (Auth::check()){
 //            return $next($request);
             Session::flash("error",'Bạn không có quyền truy cập vào trang này.');
-            return redirect()->route('login')->withErrors([
+            \Illuminate\Support\Facades\Session::flash('message', 'Bạn không có quyền truy cập vào trang này!');
+            \Illuminate\Support\Facades\Session::flash('message_type', 'error');
+            return redirect()->back()->withErrors([
                 'error' => 'Bạn không có quyền truy cập vào trang này.'
             ]);
         }
         else{
             Session::flash("error",'Bạn phải đăng nhập mới có thể vào trang này.');
-            return redirect()->route('login');
+            \Illuminate\Support\Facades\Session::flash('message', 'Bạn phải đăng nhập mới có thể vào trang này!');
+            \Illuminate\Support\Facades\Session::flash('message_type', 'error');
+            return redirect()->back()->withErrors([
+                'error' => 'Bạn phải đăng nhập mới có thể vào trang này.'
+            ]);
         }
         return $next($request);
     }

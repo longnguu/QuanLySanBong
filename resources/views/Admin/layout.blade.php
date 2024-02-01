@@ -21,7 +21,13 @@
     @include("admin.elements.sidebar")
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        <script src="//cdn.ckeditor.com/4.22.1/full/ckeditor.js"></script>
         @yield('content')
+        <script>
+            if (document.getElementById('mota')) {
+                CKEDITOR.replace('mota');
+            }
+        </script>
     </div>
     <!-- /.content-wrapper -->
 
@@ -31,6 +37,8 @@
 
     <!-- Main Footer -->
     @include("admin.elements.footer")
+
+    @include("admin.elements.alert")
 </div>
 <!-- ./wrapper -->
 

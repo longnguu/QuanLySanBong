@@ -31,35 +31,44 @@
                     </a>
                 </div>
             </div>
-            <div>
-                @if(session('del'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-danger">
-                        {{session('del')}}
-                    </div>
-                @endif
-                @if(session('updated'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">
-                        {{session('updated')}}
-                    </div>
-                @endif
-                @if(session('add'))
-                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">
-                        {{session('add')}}
-                    </div>
-                @endif
-            </div>
+{{--            <div>--}}
+{{--                @if(session('del'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-danger">--}}
+{{--                        {{session('del')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--                @if(session('updated'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">--}}
+{{--                        {{session('updated')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--                @if(session('add'))--}}
+{{--                    <div style="margin: 0px; padding: 0.5rem 1.25rem" class="alert alert-default-success">--}}
+{{--                        {{session('add')}}--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+{{--            </div>--}}
             <div class="card-body p-0">
                 <table class="table table-striped projects">
                     <thead>
                     <tr>
                         <th style="">
-                            ID
+                            Mã cơ sở
                         </th>
                         <th style="">
-                            Danh mục
+                            Tên cơ sở
                         </th>
                         <th style="">
                             Mô tả
+                        </th>
+                        <th style="">
+                            Địa chỉ
+                        </th>
+                        <th style="">
+                            Giờ mở cửa
+                        </th>
+                        <th style="">
+                            Giờ đóng cửa
                         </th>
                         <th style="">
                         </th>
@@ -75,7 +84,16 @@
                                 {{ $value -> tenCoSo }}
                             </td>
                             <td>
-                                {{ $value -> moTa }}
+                                {!! $value -> moTa  !!}
+                            </td>
+                            <td>
+                                {{ $value -> diaChi }}
+                            </td>
+                            <td>
+                                {{ $value -> thoiGianMoCua }}
+                            </td>
+                            <td>
+                                {{ $value -> thoiGianDongCua }}
                             </td>
                             <td class="project-actions text-right">
                                 <a class="btn btn-info btn-sm"

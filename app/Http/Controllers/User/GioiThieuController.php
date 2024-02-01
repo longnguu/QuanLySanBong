@@ -25,6 +25,11 @@ class GioiThieuController extends Controller
         //
         return view('User.pages.gioithieu.lienhe');
     }
+    public function index3()
+    {
+        //
+        return view('User.pages.gioithieu.chinhsach');
+    }
 
     /**
      * Show the form for creating a new resource.

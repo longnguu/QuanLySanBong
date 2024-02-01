@@ -51,6 +51,10 @@
                                     <input value="{{ $product -> soLuongCon }}" name="SoLuong" type="number" class="form-control">
                                 </div>
                                 <div class="">
+                                    <label for="inputStatus">Số lượng cho thuê</label>
+                                    <input value="{{ $product -> soLuongChoThue }}" name="SoLuongThue" type="number" class="form-control">
+                                </div>
+                                <div class="">
                                     <label for="inputStatus">Đơn giá bán</label>
                                     <input value="{{ $product -> donGiaBan }}" name="DonGiaBan" type="number" class="form-control">
                                 </div>
@@ -73,7 +77,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label for="inputClientCompany">Mã Khuyến Mãi</label>
                                 <select name="KM_id" id="inputStatus" class="form-control custom-select">
                                     @foreach($km as  $key => $vl)

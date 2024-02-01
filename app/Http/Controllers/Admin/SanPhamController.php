@@ -13,7 +13,7 @@ class SanPhamController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
         $list = DB::table('vatpham')
@@ -21,7 +21,7 @@ class SanPhamController extends Controller
             ->join('khuyenmai', 'vatpham.maKhuyenMai', '=', 'khuyenmai.maKM')
             ->select('vatpham.*', 'loaiVP.tenLoaiVP', 'khuyenmai.TenKM')
             ->orderBy('vatpham.maVatPham')
-            ->get();
+            ->paginate(10)->withQueryString();
         if ($id = request()->product) {
             $list = DB::table('vatpham')
                 ->join('loaivp', 'vatpham.maLoaiVP', '=', 'loaivp.maLoaiVP')
@@ -29,7 +29,7 @@ class SanPhamController extends Controller
                 ->select('vatpham.*', 'loaiVP.tenLoaiVP', 'khuyenmai.TenKM')
                 ->where('vatpham.tenVatPham', 'like', '%' . $id . '%')
                 ->orderBy('vatpham.maVatPham')
-                ->get();
+                ->paginate(10)->withQueryString();
         }
         $list_brand = DB::table('loaiVP')
             ->get();
@@ -91,9 +91,11 @@ class SanPhamController extends Controller
         $new->tenVatPham = $request->TenSP;
         $new->maLoaiVP = $request->TH_id;
         $new->moTa = $request->MoTa;
+        $new->donGiaGoc = $request->DonGiaBan;
         $new->donGiaBan = $request->DonGiaBan;
         $new->donGiaThue = $request->DonGiaThue;
         $new->soLuongCon = $request->SoLuong;
+        $new->soLuongChoThue = $request->SoLuongThue;
 
         $request->validate([
             'HinhAnh1' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -159,10 +161,12 @@ class SanPhamController extends Controller
         $new->maKhuyenMai = $request->maKM;
         $new->tenVatPham = $request->TenSP;
         $new->moTa = $request->MoTa;
+        $new->donGiaGoc = $request->DonGiaBan;
         $new->donGiaBan = $request->DonGiaBan;
         $new->donGiaThue = $request->DonGiaThue;
         $new->soLuongCon = $request->SoLuong;
-        dd($request);
+        $new->soLuongChoThue = $request->SoLuongThue;
+//        dd($request);
         $request->validate([
             'HinhAnh1' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
             'HinhAnh2' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
@@ -197,7 +201,7 @@ class SanPhamController extends Controller
         $new->maKhuyenMai = $request->KM_id;
         $new->trangThai = $request->TrangThai;
         $new->save();
-        dd($new);
+//        dd($new);
 
         return redirect()->route("admin.product.index")->with('add', 'Thêm thành công');
     }
@@ -206,7 +210,7 @@ class SanPhamController extends Controller
 
     public function active($id)
     {
-        $pr = SanBong::find($id);
+        $pr = VatPham::find($id);
         if ($pr->trangThai == 1) {
             $pr->trangThai = 0;
         } else {

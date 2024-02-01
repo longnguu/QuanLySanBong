@@ -23,7 +23,7 @@ class DetailsController extends Controller
     public function index1()
     {
         //
-        $product=DB::table('vatpham')->get();
+        $product=DB::table('vatpham')->where('trangThai','=',1)->where('soLuongCon','>',0)->get();
         return view('User.Pages.Details.sanpham',[
             'product'=>$product,
         ]);
@@ -113,63 +113,72 @@ class DetailsController extends Controller
         }
 
 
-        $product = DB::table('chitietthuesan')
-            ->rightJoin('sanbong', 'chitietthuesan.maSan', '=', 'sanbong.maSan')
+        $product = DB::table('sanbong')
+            ->leftJoin('chitietthuesan', 'chitietthuesan.maSan', '=', 'sanbong.maSan')
+            ->where('chitietthuesan.maVatPham', '=', null)
             ->select('sanbong.*')
-            ->selectRaw('CASE
-                    WHEN
-                        ? < chitietthuesan.thoiGianKetThuc
-                        and
-                        ? > chitietthuesan.thoiGianBatDau
-                    THEN 1
-                    ELSE 0
-                 END AS stt', [
+            ->selectRaw('
+        CASE
+            WHEN (? < chitietthuesan.thoiGianBatDau AND ? >chitietthuesan.thoiGianBatDau) OR (? < chitietthuesan.thoiGianKetThuc AND ? > chitietthuesan.thoiGianKetThuc) OR (? = chitietthuesan.thoiGianBatDau AND ? = chitietthuesan.thoiGianKetThuc)
+            THEN 1
+            ELSE 0
+        END AS stt', [
+                $carbonThoiGianBatDau,
+                $carbonThoiGianKetThuc,
+                $carbonThoiGianBatDau,
+                $carbonThoiGianKetThuc,
                 $carbonThoiGianBatDau,
                 $carbonThoiGianKetThuc
             ])
+//            ->having('stt', '=', 1)
+            ->distinct()
             ->orderByRaw('
         CASE
-            WHEN ? = 1 THEN sanbong.tenSan END ASC,
-        CASE
-            WHEN ? = 2 THEN sanbong.tenSan END DESC,
-        CASE
-            WHEN ? = 3 THEN sanbong.giaDichVu END ASC,
-        CASE
-            WHEN ? = 4 THEN sanbong.giaDichVu END DESC', [
+            WHEN ? = 1 THEN sanbong.tenSan
+            WHEN ? = 2 THEN sanbong.tenSan
+            WHEN ? = 3 THEN sanbong.giaDichVu
+            WHEN ? = 4 THEN sanbong.giaDichVu
+        END ' . ($sort == 2 || $sort == 4 ? 'DESC' : 'ASC'), [
                 $sort,
                 $sort,
                 $sort,
                 $sort
-            ])
+            ])->orderBy('stt')
             ->get();
-        return view('User.Ajax.sanbong',['product'=>$product]);
-    }
-    public function filter1(Request $request){
-        $thoiGianBatDau = $request->time;
-        $carbonThoiGianBatDau = \Carbon\Carbon::parse($thoiGianBatDau);
-        if ($request->loaihinh==1){
-            $carbonThoiGianKetThuc = Carbon::parse($thoiGianBatDau)->addHour($request->loaihinh);
-        }else{
-            $carbonThoiGianKetThuc = Carbon::parse($thoiGianBatDau)->addDays($request->loaihinh);
-        }
-
-
-        $product = DB::table('chitietthuesan')
-            ->rightJoin('sanbong', 'chitietthuesan.maSan', '=', 'sanbong.maSan')
+        $product1 = DB::table('sanbong')
+            ->leftJoin('chitietthuesan', 'chitietthuesan.maSan', '=', 'sanbong.maSan')
+            ->where('chitietthuesan.maVatPham', '=', null)
             ->select('sanbong.*')
-            ->selectRaw('CASE
-                    WHEN
-                        ? < chitietthuesan.thoiGianKetThuc
-                        and
-                        ? > chitietthuesan.thoiGianBatDau
-                    THEN 1
-                    ELSE 0
-                 END AS stt', [
+            ->selectRaw('
+        CASE
+            WHEN (? <= chitietthuesan.thoiGianBatDau AND ? >=chitietthuesan.thoiGianBatDau) OR (? <= chitietthuesan.thoiGianKetThuc AND ? >= chitietthuesan.thoiGianKetThuc)
+            THEN 1
+            ELSE 0
+        END AS stt', [
+                $carbonThoiGianBatDau,
+                $carbonThoiGianKetThuc,
                 $carbonThoiGianBatDau,
                 $carbonThoiGianKetThuc
             ])
+            ->having('stt', '=', 1)
+            ->distinct()
+            ->orderByRaw('
+        CASE
+            WHEN ? = 1 THEN sanbong.tenSan
+            WHEN ? = 2 THEN sanbong.tenSan
+            WHEN ? = 3 THEN sanbong.giaDichVu
+            WHEN ? = 4 THEN sanbong.giaDichVu
+        END ' . ($sort == 2 || $sort == 4 ? 'DESC' : 'ASC'), [
+                $sort,
+                $sort,
+                $sort,
+                $sort
+            ])->orderBy('stt')
             ->get();
-        $product=DB::table('vatpham')->get();
+        return view('User.Ajax.sanbong',['product'=>$product,'product1'=>$product1]);
+    }
+    public function filter1(Request $request){
+        $product=DB::table('vatpham')->where('trangThai','=',1)->where('soLuongCon','>',0)->get();
         return view('User.Ajax.sanpham',['product'=>$product]);
     }
 }

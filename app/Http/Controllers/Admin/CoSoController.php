@@ -49,6 +49,8 @@ class CoSoController extends Controller
     public function edit(string $id)
     {
         //
+        $product = CoSo::find($id);
+        return view('admin.pages.coso.edit',['cate'=>$product]);
     }
 
     /**
@@ -57,6 +59,14 @@ class CoSoController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $new = CoSo::find($id);
+        $new->tenCoSo = $request->TenDM;
+        $new->moTa = $request->moTa;
+        $new->diaChi = $request->diaChi;
+        $new->thoiGianMoCua = $request->gmc;
+        $new->thoiGianDongCua = $request->gdc;
+        $new->save();
+        return redirect()->route("admin.coso.index")->with('updated', 'Chỉnh sửa thành công');
     }
 
     /**
@@ -76,7 +86,10 @@ class CoSoController extends Controller
         $new = new CoSo();
         $new->tenCoSo = $request->TenDM;
         $new->moTa = $request->moTa;
+        $new->diaChi = $request->diaChi;
+        $new->thoiGianMoCua = $request->gmc;
+        $new->thoiGianDongCua = $request->gdc;
         $new->save();
-        return redirect()->route("admin.category.index")->with('add', 'Data inserted thành công');
+        return redirect()->route("admin.coso.index")->with('add', 'Thêm thành công');
     }
 }

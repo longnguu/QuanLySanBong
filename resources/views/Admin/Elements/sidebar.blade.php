@@ -35,156 +35,219 @@
                        class="nav-link {{ Route::is('admin.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
-                            Dashboard
+                            Trang chủ
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link {{ Route::is('admin.coso.index') || Route::is('admin.sanbong.index') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-ellipsis-h"></i>
-                        <p>
-                            Quản lý sân
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.coso.index') }}"
-                               class="nav-link {{ Route::is('admin.coso.index') ? 'active' : '' }}">
-                                <i class="{{ Route::is('admin.coso.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
-                                <p>
+                @if(\Illuminate\Support\Facades\Auth::user()->maQuyen==1)
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Route::is('admin.coso.index') || Route::is('admin.sanbong.index') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-ellipsis-h"></i>
+                            <p>
+                                Quản lý sân
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.coso.index') }}"
+                                   class="nav-link {{ Route::is('admin.coso.index') ? 'active' : '' }}">
+                                    <i class="{{ Route::is('admin.coso.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
+                                    <p>
                             <span class="badge badge-info right">
                                     {{DB::table('coso')->count()}}
                                 </span>
-                                    Các cơ sở
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.sanbong.index') }}" class="nav-link {{ Route::is('admin.sanbong.index') ? 'active' : '' }}">
-                                <i class="{{ Route::is('admin.sanbong.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
-                                <p>
+                                        Các cơ sở
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.sanbong.index') }}" class="nav-link {{ Route::is('admin.sanbong.index') ? 'active' : '' }}">
+                                    <i class="{{ Route::is('admin.sanbong.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
+                                    <p>
                             <span class="badge badge-info right">
                                     {{DB::table('sanbong')->count()}}
                                 </span>
-                                    Sân bóng
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                                        Sân bóng
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
+                @if(\Illuminate\Support\Facades\Auth::user()->maQuyen==1)
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ (Route::is('admin.category.index') || Route::is('admin.discount.index') || Route::is('admin.product.index'))  ? 'active' : '' }}">
+                            <i class="nav-icon fab fa-product-hunt"></i>
+                            <p>
+                                Quản lý vật phẩm
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.category.index') }}"
+                                       class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
+                                        <i class="{{ Route::is('admin.category.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
+                                        <p>
+                                <span class="badge badge-info right">
+                                        {{DB::table('loaiVP')->count()}}
+                                    </span>
+                                            Danh mục sản phẩm
+                                        </p>
+                                    </a>
+                                </li>
+{{--                                <li class="nav-item">--}}
+{{--                                    <a href="{{ route('admin.discount.index') }}"--}}
+{{--                                       class="nav-link {{ Route::is('admin.discount.index') ? 'active' : '' }}">--}}
+{{--                                        <i class="{{ Route::is('admin.discount.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>--}}
+{{--                                        <p>--}}
+{{--                                <span class="badge badge-info right">--}}
+{{--                                        {{DB::table('khuyenmai')->count()}}--}}
+{{--                                    </span>--}}
+{{--                                            Khuyến mãi--}}
+{{--                                        </p>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.product.index') }}"
+                                       class="nav-link {{ Route::is('admin.product.index') ? 'active' : '' }}">
+                                        <i class="{{ Route::is('admin.product.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
+                                        <p>
+                                <span class="badge badge-info right">
+                                        {{DB::table('vatpham')->count()}}
+                                    </span>
+                                            Sản phẩm
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                    </li>
+                @endif
                 <li class="nav-item">
-                    <a href="#" class="nav-link {{ (Route::is('admin.category.index') || Route::is('admin.discount.index') || Route::is('admin.product.index'))  ? 'active' : '' }}">
-                        <i class="nav-icon fab fa-product-hunt"></i>
+                    <a href="#" class="nav-link {{ (Route::is('admin.order.index'))  ? 'active' : '' }}">
+                        <i class="nav-icon fab fa-first-order"></i>
                         <p>
-                            Quản lý vật phẩm
+                            Quản lý đơn hàng
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('admin.category.index') }}"
-                               class="nav-link {{ Route::is('admin.category.index') ? 'active' : '' }}">
-                                <i class="{{ Route::is('admin.category.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
+                            <a href="{{ route('admin.order.index') }}"
+                               class="nav-link {{ Route::is('admin.order.index') ? 'active' : '' }}">
+                                <i class="{{ Route::is('admin.order.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
                                 <p>
-                            <span class="badge badge-info right">
-                                    {{DB::table('loaiVP')->count()}}
-                                </span>
-                                    Danh mục sản phẩm
+                                    Đơn thuê
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('admin.discount.index') }}"
-                               class="nav-link {{ Route::is('admin.discount.index') ? 'active' : '' }}">
-                                <i class="{{ Route::is('admin.discount.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
-                                <p>
-                            <span class="badge badge-info right">
-                                    {{DB::table('khuyenmai')->count()}}
+                            <a href="{{ route('admin.order.index1') }}"
+                               class="nav-link {{ Route::is('admin.order.index1') ? 'active' : '' }}">
+                                <span class="badge badge-info right">
+                                    {{DB::table('donhang')->where('loaiDonHang','=',2)->where('trangThai','=',0)->orderBy('donhang.id','desc')->count()}}
                                 </span>
-                                    Khuyến mãi
+                                <i class="{{ Route::is('admin.order.index1') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
+                                <p>
+                                    Đơn mua
                                 </p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('admin.product.index') }}"
-                               class="nav-link {{ Route::is('admin.product.index') ? 'active' : '' }}">
-                                <i class="{{ Route::is('admin.product.index') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>
-                                <p>
-                            <span class="badge badge-info right">
-                                    {{DB::table('vatpham')->count()}}
-                                </span>
-                                    Sản phẩm
-                                </p>
-                            </a>
-                        </li>
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="{{ route('admin.order.add') }}"--}}
+{{--                               class="nav-link {{ Route::is('admin.order.add') ? 'active' : '' }}">--}}
+{{--                                <i class="{{ Route::is('admin.order.add') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>--}}
+{{--                                <p>--}}
+{{--                                    Yêu cầu trả hàng/hoàn tiền--}}
+{{--                                </p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a href="{{ route('admin.order.add') }}"--}}
+{{--                               class="nav-link {{ Route::is('admin.order.add') ? 'active' : '' }}">--}}
+{{--                                <i class="{{ Route::is('admin.order.add') ? 'fa fa-check-circle' : 'far fa-circle' }} nav-icon"></i>--}}
+{{--                                <p>--}}
+{{--                                    Báo lỗi--}}
+{{--                                </p>--}}
+{{--                            </a>--}}
+{{--                        </li>--}}
                     </ul>
                 </li>
-
-
-                <li class="nav-item">
-                    <a href="{{ route('admin.order.index') }}"
-                       class="nav-link {{ Route::is('admin.order.index') ? 'active' : '' }}">
+{{--                <li class="nav-item">--}}
+{{--                    <a href="{{ route('admin.order.index') }}"--}}
+{{--                       class="nav-link {{ Route::is('admin.order.index') ? 'active' : '' }}">--}}
 {{--                                @if(DB::table('hoadon')->where('TrangThai', 0)->count()!= 0)--}}
 {{--                                <span class="badge badge-danger right">--}}
 {{--                                            {{DB::table('hoadon')->where('TrangThai', 0)->count()}}--}}
 {{--                                        </span>--}}
 {{--                                @endif--}}
-                        <i class="nav-icon fas fa-sort-amount-up"></i>
-                        <p>
-                            Đơn hàng
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('admin.user.index') }}"
-                       class="nav-link {{ Route::is('admin.user.index') ? 'active' : '' }}">
+{{--                        <i class="nav-icon fas fa-sort-amount-up"></i>--}}
+{{--                        <p>--}}
+{{--                            Đơn hàng--}}
+{{--                        </p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+                @if(\Illuminate\Support\Facades\Auth::user()->maQuyen==1)
+                    <li class="nav-item">
+                        <a href="{{ route('admin.user.index') }}"
+                           class="nav-link {{ Route::is('admin.user.index') ? 'active' : '' }}">
                         <span class="badge badge-info right">
                                     {{DB::table('nguoidung')->count()}}
                                 </span>
-                        <i class="nav-icon fas fa-users"></i>
-                        <p>
-                            Người dùng
-                        </p>
-                    </a>
-                </li>
+                            <i class="nav-icon fas fa-users"></i>
+                            <p>
+                                Người dùng
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('admin.coupon.index') }}"
+                           class="nav-link {{ Route::is('admin.coupon.index') ? 'active' : '' }}">
+                            @if(DB::table('magiamgia')->count()!=0)
+                                <span class="badge badge-info right">
+                                            {{DB::table('magiamgia')->count()}}
+                                    </span>
+                            @endif
+                            <i class="nav-icon fas fa-dollar-sign"></i>
+                            <p>
+                                Mã giảm giá
+                            </p>
+                        </a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a href="{{ route('admin.naptien.index') }}"
                        class="nav-link {{ Route::is('admin.naptien.index') ? 'active' : '' }}">
-{{--                                @if(DB::table('lichsunap')->where('trangthai','=',0)->count()!=0)--}}
-{{--                                    <span class="badge badge-danger right">--}}
-{{--                                            {{DB::table('lichsunap')->where('trangthai','=',0)->count()}}--}}
-{{--                                    </span>--}}
-{{--                                @endif--}}
+                        {{--                            @if(DB::table('lichsunap')->where('trangthai','=',0)->count()!=0)--}}
+                        {{--                                <span class="badge badge-danger right">--}}
+                        {{--                                        {{DB::table('lichsunap')->where('trangthai','=',0)->count()}}--}}
+                        {{--                                </span>--}}
+                        {{--                            @endif--}}
                         <i class="nav-icon fas fa-money-bill-wave"></i>
                         <p>
-                            Yêu cầu chuyển tiền
+                            Lịch sử giao dịch
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('admin.coupon.index') }}"
-                       class="nav-link {{ Route::is('admin.coupon.index') ? 'active' : '' }}">
-{{--                                @if(DB::table('magiamgia')->count()!=0)--}}
-{{--                                    <span class="badge badge-info right">--}}
-{{--                                            {{DB::table('magiamgia')->count()}}--}}
-{{--                                    </span>--}}
-{{--                                @endif--}}
-                        <i class="nav-icon fas fa-dollar-sign"></i>
+                    <a href="{{ route('admin.thongbao.index') }}"
+                       class="nav-link {{ Route::is('admin.thongbao.index') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-bell"></i>
                         <p>
-                            Mã giảm giá
+                            Gửi thông báo
                         </p>
                     </a>
                 </li>
-                <li class="nav-header">QUẢN TRỊ</li>
-                <li class="nav-item">
-                    <a href="pages/calendar.html" class="nav-link">
-                        <i class="nav-icon fas fa-code"></i>
-                        <p>
-                            Đang phát triển...
-                        </p>
-                    </a>
-                </li>
+{{--                <li class="nav-header">QUẢN TRỊ</li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a href="pages/calendar.html" class="nav-link">--}}
+{{--                        <i class="nav-icon fas fa-code"></i>--}}
+{{--                        <p>--}}
+{{--                            Đang phát triển...--}}
+{{--                        </p>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

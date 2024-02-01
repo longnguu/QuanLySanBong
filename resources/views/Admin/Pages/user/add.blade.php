@@ -69,7 +69,7 @@
                                     <label for="inputName">Quyền</label>
                                     <select class="form-control" name="Quyen_id" id="inputName">
                                         @foreach($quyen as  $key => $vl)
-                                            <option value="{{ $vl->MaQuyen }}">{{ $vl->TenQuyen }}</option>
+                                            <option value="{{ $vl->maQuyen }}">{{ $vl->tenQuyen }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -78,14 +78,14 @@
                                     <input name="TrangThai" type="text" id="inputName" class="form-control">
 
                                 </div>
-                                <div class="text-center d-flex">
-                                    <div>
-                                        <a href="{{route('admin.user.index')}}" class="btn btn-secondary">Hủy</a>
-                                    </div>
-                                    <div>
-                                        <input type="submit" value="Thêm" class="btn btn-success float-right">
-                                    </div>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center d-flex">
+                            <div>
+                                <a href="{{route('admin.user.index')}}" class="btn btn-secondary">Hủy</a>
+                            </div>
+                            <div>
+                                <input type="submit" value="Thêm" class="btn btn-success float-right">
                             </div>
                         </div>
                         <!-- /.card-body -->
